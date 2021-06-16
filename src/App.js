@@ -1,10 +1,16 @@
 import React from 'react';
-import './App.css';
+import './sass/index.scss';
+import MainComp from "./components/mainComp"
+import MainFrontComp from './components/mainFrontComp';
+
 
 function App() {
   return (
     <div className="App">
-        Animated Website checking
+      <MainComp >
+        <MainFrontComp />
+      </MainComp>
+      
     </div>
   );
 }
