@@ -8,8 +8,9 @@ function App() {
   return (
     <div className="App">
       <MainComp >
-        <MainFrontComp />
+
       </MainComp>
+      <MainFrontComp />
       
     </div>
   );
