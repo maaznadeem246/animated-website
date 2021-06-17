@@ -7,6 +7,7 @@ import MainFrontComp from './components/mainFrontComp';
 function App() {
   return (
     <div className="App">
+   
       <MainComp >
 
       </MainComp>

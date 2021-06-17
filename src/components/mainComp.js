@@ -1,7 +1,7 @@
 import React from "react"
 import { useSpring, animated } from "react-spring"
 import Styled from "styled-components"
-
+import ProductsSlider from "./productsSlider"
 
 const BackDiv = Styled.div`
 background-color:white;
@@ -26,8 +26,8 @@ const styles = {
 function MainComp({children}){
 
     const stylesAnim = useSpring({
-        config:{duration:500},
-        delay:300,
+        config:{duration:600},
+        delay:500,
         to:[
             { opacity: 0.6, transform:'scale(1,1)'},
             { opacity: 1,},
@@ -36,11 +36,12 @@ function MainComp({children}){
       })
       
     return (
-        <animated.div  className={styles.mainD} style={stylesAnim}>
-         
-        <BackDiv>
-            {children}
-        </BackDiv>
+        <animated.div  className={styles.mainD} style={stylesAnim}>  
+                       
+            <BackDiv>
+                {children}
+            </BackDiv>  
+            <ProductsSlider />
         </animated.div>
     )
 }
