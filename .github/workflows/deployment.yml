@@ -24,6 +24,8 @@ jobs:
       uses: actions/setup-node@v2-beta
       with:
         node-version: 12
+
+    - name: install dep
       run : npm install
       
     # - uses: borales/actions-yarn@v2.0.0
