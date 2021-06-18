@@ -11,11 +11,11 @@ const StyledImg = styled.img`
 
 `
 
-function Product({pim,style}){
+function Product({pim,style,changeAnimDir}){
     
     return (
            <animated.div  style={{'user-select':'none' ,...style}}  >
-               <StyledImg src={pim} onClick={(e)=> { e.stopPropagation();}}  />
+               <StyledImg src={pim} onClick={(e)=> { changeAnimDir(e)}}  />
             </animated.div>
     )
 }
