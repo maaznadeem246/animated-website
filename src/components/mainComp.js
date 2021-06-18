@@ -26,7 +26,7 @@ const styles = {
 function MainComp({children}){
 
     const stylesAnim = useSpring({
-        config:{duration:600},
+        config:{duration:700},
         delay:500,
         to:[
             { opacity: 0.6, transform:'scale(1,1)'},

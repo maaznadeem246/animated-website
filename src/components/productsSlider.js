@@ -1,7 +1,10 @@
 import React, { useState, useCallback,  useEffect, useRef } from 'react'
 import { useTransition, animated, useSpringRef } from '@react-spring/web'
 import styled from 'styled-components'
-
+import Can1 from "../images/can1.png"
+import Can2 from "../images/can2.png"
+import Can3 from "../images/can3.png"
+import Product from './product'
 
 const MainDiv = styled.div`
 
@@ -29,7 +32,9 @@ const pages = [
 ]
 
 function ProductsSlider(){
-
+    const productImages = [
+      Can1,Can2,Can3
+    ]
     const [index, setIndex] = useState(0)
     const onClick = useCallback(() => setIndex(state => (state + 1) % 3), [])
     const transRef = useSpringRef()
@@ -41,6 +46,8 @@ function ProductsSlider(){
         leave: { opacity: 0, transform: 'translate3d(-50%,0,0)' },
       })
 
+      cons
+
       useEffect(() => {
         transRef.start()
         console.log(index)
@@ -49,10 +56,9 @@ function ProductsSlider(){
     return (
         <MainDiv className='container' onClick={onClick}>
             {transitions((style, i) => {
-                const Page = pages[i]
-                return <Page  style={{'user-select':'none','scroll-behavior': 'unset' ,...style}} />
+                const Page = productImages[i]
+                return <Product pim={Page} style={{'user-select':'none' ,...style}} />
             })}
-
         </MainDiv>
     )
 }
