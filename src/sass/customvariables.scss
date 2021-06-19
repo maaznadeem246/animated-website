@@ -4,10 +4,12 @@ $defaultFont: "proxima-nova", "Montserrat", Helvetica, "Helvetica Neue", Arial, 
 // $defaultFontSize:14;
 $defaultWeight:500;
 $defaultColor:#505050;
+$defaultBackColor:#daffdb; 
 
 
 :export{
     defaultFont:$defaultFont;
     defaultWeight:$defaultWeight;
-    defaultColor:$defaultColor
+    defaultColor:$defaultColor;
+    defaultBackColor:$defaultBackColor;
 }

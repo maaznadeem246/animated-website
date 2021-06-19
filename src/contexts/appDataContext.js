@@ -22,13 +22,15 @@ const initialState = {
     productsBackData:[
         frontBack,Can1Back,Can2Back,Can3Back
     ],
-    prdctAnimIndex:0
+    prdctAnimIndex:0,
+    appName:'Cold & Can'
 };
 
 const reducer = (state, action) => {
     switch (action.type) {
         case 'UPDATE_PRDCTANIMINDEX':
             const {data}  = action.payload;
+            console.log(data)
             return{
                 ...state,
                 prdctAnimIndex:data,
@@ -90,4 +92,4 @@ export const AppDataProvider = ({ children }) => {
 
 
 
-export default  AppDataContext
+export default  AppDataContext  

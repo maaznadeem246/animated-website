@@ -29,3 +29,17 @@ html,body{
     user-select: none;
     scroll-behavior: unset;
 }
+
+
+.bg {
+    position: absolute;
+    
+    margin:0;
+
+    object-fit:'contain';
+    width: 50%;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    will-change: transform,opacity; 
+  }

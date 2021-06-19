@@ -1,9 +1,6 @@
 import React, { useState, useCallback,  useEffect, useRef } from 'react'
 import { useTransition, config, animated, useSpringRef } from '@react-spring/web'
 import styled from 'styled-components'
-import Can1 from "../images/can1.png"
-import Can2 from "../images/can2.png"
-import Can3 from "../images/can3.png"
 import Product from './product'
 import Welcome from './welcomComp'
 import useAppData from '../hooks/useAppData'
@@ -30,7 +27,7 @@ scroll-behavior: unset;
 
 
 function ProductsSlider(){
-  const {productsData,updatePrdctAnimIndex} = useAppData()
+  const {productsData,prdctAnimIndex, updatePrdctAnimIndex } = useAppData()
   
     // const productImages = [
     //   'welcome',
@@ -46,10 +43,12 @@ function ProductsSlider(){
         keys: null,
         unique: true,
         reverse:true,
-        // config: config.gentle,
+
+        config: config.gentle,
         from: { opacity: 0, transform: `translate3d(${ts?'':'-'}100%,0,0)` },
         enter: { opacity: 1, transform: 'translate3d(0%,0,0)' },
         leave: { opacity: 0, transform: `translate3d(${ts?'-':''}100%,0,0)` },
+ 
       })
 
 
@@ -60,12 +59,13 @@ function ProductsSlider(){
       // },[productsData.length])
 
       useEffect(() => {
-        updatePrdctAnimIndex(index)
-        console.log(transRef)
+
+        //console.log(transRef)
+
         transRef.start()
-      
+        updatePrdctAnimIndex(index)      
         
-        console.log(index)
+      //  console.log(index)
       }, [index])
 
       const changeAnimDir = (e) => {
@@ -79,8 +79,22 @@ function ProductsSlider(){
         // console.log(getSlicedValueBefore)
         // let alteredArr = !ts ?  [,...getSlicedValueAfter.reverse(),...getSlicedValueBefore] : [...getSlicedValueAfter,...getSlicedValueBefore]
         // setProductImages(alteredArr);
-        // setTs((prev)=>!prev);
-        
+        setTs((prev)=>!prev);
+          // console.log(transRef.)
+          setIndex((prev) => prev == 0 ?  productImages.length -1 : prev- 1)
+
+      }
+
+      const chnL = () => { 
+        setTs(false);
+        // console.log(transRef.)
+        setIndex((prev) => prev == 0 ?  productImages.length -1 : prev- 1)
+
+      }
+
+      const chnR = () => { 
+        setTs(true);
+        setIndex((prev) => productImages.length -1 ==  prev ?  0  : prev + 1)
 
       }
 
@@ -93,8 +107,12 @@ function ProductsSlider(){
       ]
     
     return (
+      <>
+        {/* <button onClick={chnL} >left</button>
+
+        <button onClick={chnR}>right</button> */}
         <MainDiv className='container' onClick={onClick}>
-          {console.log(productImages)}
+
             { transitions((style, i) => {
               console.log(style)
                 const Page = productImages[i]
@@ -112,6 +130,7 @@ function ProductsSlider(){
                 )
             })}
         </MainDiv>
+   </>
     )
 }
 

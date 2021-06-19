@@ -1,6 +1,7 @@
 import React from "react"
 import { useSpring,animated } from "react-spring";
 import styled from "styled-components";
+import useAppData from "../hooks/useAppData";
 
 
 const AppName = styled.h1`
@@ -45,7 +46,7 @@ const AnimatedDivs = ({children,direction='default'}) => {
 
     const animAppName = useSpring({
         config:{duration:600},
-        delay:700,
+        delay:1000,
         to:{ opacity: 1, transform:'translate(0)'},
         from: { opacity: 0, transform:selDir[direction]},
       })
@@ -57,15 +58,14 @@ const AnimatedDivs = ({children,direction='default'}) => {
 }
 
 function MainFrontComp(){
-    
+    const {appName} = useAppData();    
 
     return (
         <>
        
         <AppName>
             <AnimatedDivs direction='up' >
-                <div>ProD</div> 
-                <div>DroP</div>
+                <div>{appName}</div> 
             </AnimatedDivs>
         </AppName>
 
