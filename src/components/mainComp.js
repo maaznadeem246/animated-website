@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useLayoutEffect, useState } from "react"
 import { useSpring, animated } from "react-spring"
 import Styled from "styled-components"
 import ProductsSlider from "./productsSlider"
 import BackCover from "./backCover"
 import customVar from "../sass/customvariables.scss"
 import useAppData from "../hooks/useAppData"
+import useWindowSize from "../hooks/useWindowSize"
 
 const BackDiv = Styled.div`
 background-color:${props => props.brColor};
@@ -27,7 +28,9 @@ const styles = {
 
 function MainComp(){
     const {prdctAnimIndex} = useAppData()
+    const [width] = useWindowSize();
     const [ind, setIndex] = useState(0)
+    const [scrWidth, setScrWidth] = useState(0)
     const [brColors] = useState(['white','#1f78f0ba','#fece2fba','#f04e23ba'])
     const stylesAnim = useSpring({
         config:{duration:700},
@@ -42,8 +45,47 @@ function MainComp(){
       useEffect(()=>{
         setIndex(prdctAnimIndex)
       },[prdctAnimIndex])
+
+      useLayoutEffect(()=>{
+          
+        let cursor = document.querySelector(".cursor");
+        console.log(cursor.style.width)
+        window.addEventListener("mousemove", animation);
+        function animation (e){
+           
+            cursor.style.top = e.pageY + "px";
+            cursor.style.left = e.pageX + "px";
+            if(scrWidth / 2 < e.pageX ){
+                cursor.style.transform = 'rotateY(3.142rad)'
+                cursor.style.marginLeft = '-45px'
+            }else{
+                cursor.style.transform = 'rotateY(0)'
+                cursor.style.marginLeft = '0px'
+            }
+
+          };
+
+        window.addEventListener("mouseleave",onLeave);
+          function onLeave(e){
+            cursor.style.display = "block";
+        }
+
+
+        window.addEventListener("mouseenter",onEnter);
+        function onEnter(e){
+            cursor.style.display = 'none';
+        }
+      },[scrWidth])
+
+
+      useEffect(()=>{
+        console.log(width)
+        setScrWidth(width)
+      },[width])
       
     return (
+        <>
+        <div className="cursor"></div>
         <animated.div   className={styles.mainD} style={stylesAnim}>  
                        
             <BackDiv brColor={brColors[ind] || brColors[1]}>
@@ -52,6 +94,7 @@ function MainComp(){
 
             <ProductsSlider />
         </animated.div>
+        </>
     )
 }
 

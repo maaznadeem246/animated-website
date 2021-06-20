@@ -4,6 +4,8 @@ import styled from 'styled-components'
 import Product from './product'
 import Welcome from './welcomComp'
 import useAppData from '../hooks/useAppData'
+import useWindowSize from '../hooks/useWindowSize'
+import displayArrCursor from "./displayArrCursor"
 
 const MainDiv = styled.div`
 
@@ -25,17 +27,27 @@ scroll-behavior: unset;
 
 
 
+const pr = [
+  ({style,displayArrCursor}) =>  <animated.div  style={{'userSelect':'none' ,...style}}  ><div onMouseOver={(e)=> { displayArrCursor(false)}} onMouseLeave={(e)=> { displayArrCursor(true)}}> <Welcome /></div></animated.div>  ,
+  ({style,src,displayArrCursor}) =>  <Product changeAnimDir={displayArrCursor} pim={src} style={{'userSelect':'none' ,...style}} />,
+  ({style,src,displayArrCursor}) =>  <Product changeAnimDir={displayArrCursor} pim={src} style={{'userSelect':'none' ,...style}} />,
+  ({style,src,displayArrCursor}) =>  <Product changeAnimDir={displayArrCursor} pim={src} style={{'userSelect':'none' ,...style}} />,
+  
+]
+
 
 function ProductsSlider(){
   const {productsData,prdctAnimIndex, updatePrdctAnimIndex } = useAppData()
-  
+    
     // const productImages = [
     //   'welcome',
     //   Can1,Can2,Can3
     // ]
     const [index, setIndex] = useState(0)
+    const [width] = useWindowSize();
+    const [scrWidth, setScrWidth] = useState(0)
     const [productImages, setProductImages] = useState(productsData)
-    const onClick = useCallback(() => setIndex(state => (state + 1) % productImages.length), [])
+    // const onClick = useCallback(() => setIndex(state => (state + 1) % productImages.length), [])
     const transRef = useSpringRef()
     const [ts, setTs] = useState(true)
     const transitions = useTransition(index, {
@@ -79,9 +91,9 @@ function ProductsSlider(){
         // console.log(getSlicedValueBefore)
         // let alteredArr = !ts ?  [,...getSlicedValueAfter.reverse(),...getSlicedValueBefore] : [...getSlicedValueAfter,...getSlicedValueBefore]
         // setProductImages(alteredArr);
-        setTs((prev)=>!prev);
+  //      setTs((prev)=>!prev);
           // console.log(transRef.)
-          setIndex((prev) => prev == 0 ?  productImages.length -1 : prev- 1)
+//          setIndex((prev) => prev == 0 ?  productImages.length -1 : prev- 1)
 
       }
 
@@ -98,13 +110,20 @@ function ProductsSlider(){
 
       }
 
-      const pr = [
-        ({style}) =>  <animated.div  style={{'userSelect':'none' ,...style}}  ><div onClick={(e)=> { changeAnimDir(e)}}> <Welcome /></div></animated.div>  ,
-        ({style,src}) =>  <Product changeAnimDir={changeAnimDir} pim={src} style={{'userSelect':'none' ,...style}} />,
-        ({style,src}) =>  <Product changeAnimDir={changeAnimDir} pim={src} style={{'userSelect':'none' ,...style}} />,
-        ({style,src}) =>  <Product changeAnimDir={changeAnimDir} pim={src} style={{'userSelect':'none' ,...style}} />,
-        
-      ]
+      const onClick = useCallback( (e) => {
+        console.log(e.clientX)
+        if(width / 2 < e.clientX ){
+          chnR()
+        }else{
+          chnL()
+        }
+      })
+
+      useEffect(()=>{
+        console.log(width)
+        setScrWidth(width)
+      },[width])
+
     
     return (
       <>
@@ -123,7 +142,7 @@ function ProductsSlider(){
                   <>
                   {/* {Page == 'welcome' ? 
                 : */}
-                <PrPage style={style} src={Page} />
+                <PrPage displayArrCursor={displayArrCursor} style={style} src={Page} />
                 
             {/* } */}
                 </>

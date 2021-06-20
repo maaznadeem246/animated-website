@@ -1,5 +1,9 @@
 @import './customvariables.scss';
 
+*{
+    cursor: none;
+}
+
 html,body{
     color: $defaultColor;
     font-family: $defaultFont;
@@ -43,3 +47,42 @@ html,body{
     background-position: center;
     will-change: transform,opacity; 
   }
+
+
+  .cursor{
+    position: absolute;
+    width: 45px;
+    height: 5px;
+    background-color: $defaultColor;
+    border-radius: 10px;
+    z-index: 1;
+    pointer-events: none;
+    // backdrop-filter: grayscale();
+
+}
+.cursor:before{
+    content: " ";
+    position: absolute;
+    width:28px;
+    height:5px;
+    background-color: inherit;
+    border-radius: 10px;
+    transform: rotate(-40deg);
+    top:-8px;
+    left:-7px;
+}
+
+.cursor:after{
+    content: " ";
+    position: absolute;
+    width:28px;
+    height:5px;
+    background-color: inherit;
+    border-radius: 10px;
+    transform: rotate(40deg);
+    bottom:-8px;
+    left:-7px;
+}
+// .cursor-scale{
+//    transform: scale(1.5); 
+// }
