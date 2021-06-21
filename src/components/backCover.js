@@ -17,10 +17,18 @@ position:relative;
 
 
 const pr = [
-  ({style ,src}) =>  <animated.img  src={src} className={'bg'} style={{'userSelect':'none' ,...style}}  />  ,
-  ({style,src}) =>  <animated.img  src={src} className={'bg'} style={{'userSelect':'none' ,...style}}  />,
-  ({style,src}) =>  <animated.img  src={src} className={'bg'} style={{'userSelect':'none' ,...style}}  />,
-  ({style,src}) => <animated.img  src={src} className={'bg'} style={{'userSelect':'none' ,...style}}  />,      
+  ({style ,src}) =>  {
+    // imgCache.read(src)
+  return <animated.img  src={src} className={'bg'} style={{'userSelect':'none' ,...style}}  />}  ,
+  ({style,src}) => {
+    // imgCache.read(src)
+    return  <animated.img  src={src} className={'bg'} style={{'userSelect':'none' ,...style}}  />},
+  ({style,src}) => {
+    // imgCache.read(src)
+    return <animated.img  src={src} className={'bg'} style={{'userSelect':'none' ,...style}}  />},
+  ({style,src}) => {
+    // imgCache.read(src)
+    return <animated.img  src={src} className={'bg'} style={{'userSelect':'none' ,...style}}  />},      
 ]
 
 
@@ -89,8 +97,7 @@ function BackCover(){
                 const PrPage = pr[i]
                 return( 
                   <>
-                  {/* {Page == 'welcome' ? 
-                : */}
+
                 <PrPage style={{'object-fit':'cover', width:'40%',...style}} src={Page} />
                 
             {/* } */}

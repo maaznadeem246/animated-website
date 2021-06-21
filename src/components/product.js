@@ -8,14 +8,14 @@ const StyledImg = styled.img`
     cursor: pointer;
     user-select:none;
     position:relative;
-
+    
 `
 
-function Product({pim,style,changeAnimDir}){
+function Product({pim,style,displayArrCursor}){
     
     return (
-           <animated.div  style={{'user-select':'none' ,...style}}  >
-               <StyledImg src={pim} onClick={(e)=> { changeAnimDir(e)}}  />
+           <animated.div  className="containerDiv" style={{'user-select':'none' ,...style}}  >
+               <StyledImg onMouseEnter={()=>displayArrCursor(false)}  src={pim}  />
             </animated.div>
     )
 }

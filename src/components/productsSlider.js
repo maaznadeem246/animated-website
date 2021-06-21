@@ -7,13 +7,13 @@ import useAppData from '../hooks/useAppData'
 import useWindowSize from '../hooks/useWindowSize'
 import displayArrCursor from "./displayArrCursor"
 import {imgCache} from "../utilities/imageCache"
+import ProductHover from './productHover'
 
 const MainDiv = styled.div`
 
 display: flex;
 align-items: center;
 
-height: 100%;
 
 justify-content: center;
 top: 0;
@@ -28,11 +28,13 @@ scroll-behavior: unset;
 
 
 
+
+
 const pr = [
-  ({style,displayArrCursor}) =>  <animated.div  style={{'userSelect':'none' ,...style}}  ><div onMouseOver={(e)=> { displayArrCursor(false)}} onMouseLeave={(e)=> { displayArrCursor(true)}}> <Welcome /></div></animated.div>  ,
-  ({style,src,displayArrCursor}) =>  <Product changeAnimDir={displayArrCursor} pim={src} style={{'userSelect':'none' ,...style}} />,
-  ({style,src,displayArrCursor}) =>  <Product changeAnimDir={displayArrCursor} pim={src} style={{'userSelect':'none' ,...style}} />,
-  ({style,src,displayArrCursor}) =>  <Product changeAnimDir={displayArrCursor} pim={src} style={{'userSelect':'none' ,...style}} />,
+  ({style,displayArrCursor}) =>  <animated.div className="containerDiv"  style={{'userSelect':'none' ,...style}}  ><div onMouseOver={(e)=> { displayArrCursor(false)}} onMouseLeave={(e)=> { displayArrCursor(true)}}> <Welcome /></div></animated.div>  ,
+  ({style,data,displayArrCursor}) =>  <Product displayArrCursor={displayArrCursor} pim={data.img} style={{'userSelect':'none' ,...style}} />,
+  ({style,data,displayArrCursor}) =>  <Product displayArrCursor={displayArrCursor} pim={data.img} style={{'userSelect':'none' ,...style}} />,
+  ({style,data,displayArrCursor}) =>  <Product displayArrCursor={displayArrCursor} pim={data.img} style={{'userSelect':'none' ,...style}} />,
   
 ]
 
@@ -47,9 +49,10 @@ function ProductsSlider(){
     const [index, setIndex] = useState(0)
     const [width] = useWindowSize();
     const [scrWidth, setScrWidth] = useState(0)
+    const [hoverIt, setHoverIt] = useState(false)
     const [productImages, setProductImages] = useState(productsData)
-    let neA = [...productImages];
-    neA.splice(1,neA.length-1).forEach((img) => imgCache.read(img));
+    // let neA = [...productImages];
+    // neA.splice(1,neA.length-1).forEach((img) => imgCache.read(img));
     // const onClick = useCallback(() => setIndex(state => (state + 1) % productImages.length), [])
     const transRef = useSpringRef()
     const [ts, setTs] = useState(true)
@@ -120,6 +123,7 @@ function ProductsSlider(){
         }else{
           chnL()
         }
+        hideHoverDiv();
       })
 
       useEffect(()=>{
@@ -127,6 +131,21 @@ function ProductsSlider(){
         setScrWidth(width)
       },[width])
 
+
+      const cursorDivfunct = (v) => {
+        displayArrCursor(v)
+        showHoverDiv()
+      } 
+
+      const hideHoverDiv = () => {
+        if(index==0) displayArrCursor(true); 
+        setHoverIt(false)
+      }
+
+      const showHoverDiv = () => {
+        displayArrCursor(false)
+        setHoverIt(true)
+      }
     
     return (
       <>
@@ -145,13 +164,15 @@ function ProductsSlider(){
                   <>
                   {/* {Page == 'welcome' ? 
                 : */}
-                <PrPage displayArrCursor={displayArrCursor} style={style} src={Page} />
+                <PrPage displayArrCursor={cursorDivfunct} style={style} data={Page} />
                 
             {/* } */}
                 </>
                 )
             })}
+             <ProductHover displayArrCursor={displayArrCursor} hideHoverDiv={hideHoverDiv} hoverIt={hoverIt} />
         </MainDiv>
+
    </>
     )
 }
