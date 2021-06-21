@@ -2,6 +2,7 @@ import React, { useState, useCallback,  useEffect, useRef, useLayoutEffect }  fr
 import { useTransition, config, animated, useSpringRef, useSpring } from '@react-spring/web'
 import useAppData from "../hooks/useAppData"
 import styled from "styled-components"
+import {imgCache} from "../utilities/imageCache"
 
 const CoverDiv = styled.div`
 display: flex;
@@ -11,6 +12,9 @@ overflow:hidden;
 justify-content: center;
 position:relative;
 `
+
+
+
 
 const pr = [
   ({style ,src}) =>  <animated.img  src={src} className={'bg'} style={{'userSelect':'none' ,...style}}  />  ,
@@ -27,6 +31,7 @@ function BackCover(){
     const {productsBackData,prdctAnimIndex} = useAppData()
   
     const [productBack, setProductBack] = useState(productsBackData)
+    productBack.forEach((img) => imgCache.read(img));
     const [index, setIndex] = useState(0)
     const [as, setAs] = useState(true)
     // const onClick = useCallback(() => setIndex(state => (state + 1) % productBack.length), [])

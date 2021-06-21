@@ -1,9 +1,11 @@
 @import './customvariables.scss';
 
 *{
+
+}
+html{
     cursor: none;
 }
-
 html,body{
     color: $defaultColor;
     font-family: $defaultFont;

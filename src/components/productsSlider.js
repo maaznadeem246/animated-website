@@ -6,6 +6,7 @@ import Welcome from './welcomComp'
 import useAppData from '../hooks/useAppData'
 import useWindowSize from '../hooks/useWindowSize'
 import displayArrCursor from "./displayArrCursor"
+import {imgCache} from "../utilities/imageCache"
 
 const MainDiv = styled.div`
 
@@ -47,6 +48,8 @@ function ProductsSlider(){
     const [width] = useWindowSize();
     const [scrWidth, setScrWidth] = useState(0)
     const [productImages, setProductImages] = useState(productsData)
+    let neA = [...productImages];
+    neA.splice(1,neA.length-1).forEach((img) => imgCache.read(img));
     // const onClick = useCallback(() => setIndex(state => (state + 1) % productImages.length), [])
     const transRef = useSpringRef()
     const [ts, setTs] = useState(true)
