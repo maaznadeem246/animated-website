@@ -1,5 +1,8 @@
 @import './customvariables.scss';
 
+
+
+
 *{
 
 }
@@ -11,6 +14,11 @@ html,body{
     font-family: $defaultFont;
     margin: 0px;
     font-size: 14px;
+}
+
+.appNameCss{
+    font-family: $defaultAppNameFont;
+    font-size: 2.5rem;
 }
 
 .container{
@@ -88,3 +96,28 @@ html,body{
 // .cursor-scale{
 //    transform: scale(1.5); 
 // }
+
+
+
+
+.hoverInnerDiv{
+    height:100%;
+    position: absolute;
+    width:40%;
+    margin:0;
+    background-color:#f9f4eacc;
+    
+}
+
+
+.hoverDiv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hoverDivHead{
+    font-family: $defaultHvrDivFont;
+    font-size: $defaultHvrDivSize;
+    font-weight: $defaultHvrDivWeight;
+}

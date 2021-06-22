@@ -25,7 +25,7 @@ const initialState = {
         frontBack,Can1Back,Can2Back,Can3Back
     ],
     prdctAnimIndex:0,
-    appName:'Cold & Can'
+    appName:'Cold Can'
 };
 
 const reducer = (state, action) => {

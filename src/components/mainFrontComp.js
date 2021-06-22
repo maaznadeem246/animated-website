@@ -65,7 +65,7 @@ function MainFrontComp(){
        
         <AppName>
             <AnimatedDivs direction='up' >
-                <div>{appName}</div> 
+                <div className="appNameCss">{appName}</div> 
             </AnimatedDivs>
         </AppName>
 

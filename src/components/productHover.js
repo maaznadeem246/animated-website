@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import useAppData from "../hooks/useAppData"
+import { useTransition, config, animated, useSpringRef, useSpring } from '@react-spring/web'
 
 
 const HoverDiv = styled.div`
@@ -8,15 +9,19 @@ const HoverDiv = styled.div`
     position: absolute;
     width:40%;
     margin:0;
-
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction:column;
 `
 
 const HoverInnerDiv = styled.div`
-    height:100%;
-    position: absolute;
-    width:40%;
-    margin:0;
-    background-color:#f9f4eacc;
+height:100%;
+position: absolute;
+width:40%;
+margin:0;
+background-color:#f9f4eacc;
+
 `
 
 function ProductHover({hoverIt, hideHoverDiv, displayArrCursor}){
@@ -25,6 +30,11 @@ function ProductHover({hoverIt, hideHoverDiv, displayArrCursor}){
     const [index, setIndex] = useState();
     const [productData, setProductData] = useState({})
     const [hoverToggle, setHoverToggle] = useState(false)
+    
+    const [innerSyle,innerApi] = useSpring(() => ({
+     //   from:[{opacity: 1},{display:'none'}] 
+
+    }))
 
     useEffect(()=> {
         setIndex(prdctAnimIndex)
@@ -34,8 +44,18 @@ function ProductHover({hoverIt, hideHoverDiv, displayArrCursor}){
 
     useEffect(()=>{
         setHoverToggle(hoverIt)
+        // // console.log(hoverIt)
+        if(hoverIt){
+            innerApi.start({to:[{display:'block'},{opacity:1 }]})
+        }else{
+            innerApi.start({to:[{opacity:0 },{display:'none'}]})
+        }
+
     },[hoverIt])
 
+    useEffect(()=> {
+
+    },[])
 
     const onLeave = () => {
         hideHoverDiv()
@@ -51,12 +71,13 @@ function ProductHover({hoverIt, hideHoverDiv, displayArrCursor}){
     }
     return(
         <>
+                <animated.div className="hoverInnerDiv" style={{...innerSyle}} />
         { hoverToggle && <>
-        <HoverInnerDiv />
-        <HoverDiv onClick={onClick} onMouseEnter={onEnter} onMouseLeave={onLeave}>
+            {/* <HoverInnerDiv /> */}
+        <HoverDiv  onClick={onClick} onMouseEnter={onEnter} onMouseLeave={onLeave}>
             { Object.keys(productData).length != 0 &&
                 <>
-                <div>{productData.text}</div>
+                <div className="hoverDivHead">{productData.text}</div>
                 <div>{productData.textSec}</div>
                 </>
             }

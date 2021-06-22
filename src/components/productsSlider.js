@@ -138,7 +138,8 @@ function ProductsSlider(){
       } 
 
       const hideHoverDiv = () => {
-        if(index==0) displayArrCursor(true); 
+        // if(index == 0  
+        displayArrCursor(true); 
         setHoverIt(false)
       }
 

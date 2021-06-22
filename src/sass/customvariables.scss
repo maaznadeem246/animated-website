@@ -1,10 +1,32 @@
 
+@font-face {
+    font-family: 'MyFacetBlack-Regular';
+    src: url('../utilities/fonts/FacetBlack-Regular.eot'); /* IE9 Compat Modes */
+    src: url('../utilities/fonts/FacetBlack-Regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('../utilities/fonts/FacetBlack-Regular.woff2') format('woff2'), /* Super Modern Browsers */
+         url('../utilities/fonts/FacetBlack-Regular.woff') format('woff'), /* Pretty Modern Browsers */
+        //  url('../utilities/fonts/FacetBlack-Regular.ttf')  format('truetype'), /* Safari, Android, iOS */
+        //  url('../utilities/fonts/FacetBlack-Regular.svg#svgFontName') format('svg'); /* Legacy iOS */
+  }
+
+  @font-face {
+    font-family: 'Olympica';
+    src: url('../utilities/fonts/Olympica.ttf'); /* IE9 Compat Modes */
+
+  }
+
 
 $defaultFont: "proxima-nova", "Montserrat", Helvetica, "Helvetica Neue", Arial, sans-serif;
 // $defaultFontSize:14;
 $defaultWeight:500;
 $defaultColor:#474747;
 $defaultBackColor:#f9f4ea; 
+$defaultHvrDivFont:'Olympica', Helvetica, Arial, sans-serif;
+$defaultHvrDivWeight:500;
+$defaultHvrDivSize:7rem;
+$defaultAppNameFont:'MyFacetBlack-Regular', Helvetica, Arial, sans-serif;
+
+
 
 
 :export{
@@ -12,4 +34,9 @@ $defaultBackColor:#f9f4ea;
     defaultWeight:$defaultWeight;
     defaultColor:$defaultColor;
     defaultBackColor:$defaultBackColor;
+    defaultHvrDivFont:$defaultHvrDivFont;
+    defaultHvrDivWeight:$defaultHvrDivWeight;
+    defaultHvrDivSize:$defaultHvrDivSize;
+    defaultAppNameFont:$defaultAppNameFont;
+
 }
