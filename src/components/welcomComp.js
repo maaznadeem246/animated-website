@@ -12,6 +12,7 @@ const WelcomDiv = styled.div`
     font-family:${customVar.defaultAppNameFont};
     border:${props => props.border};
     background-color :${customVar.defaultBackColor};
+    letter-spacing:2.5px;
 `
 
 function Welcome(){
