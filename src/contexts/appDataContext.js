@@ -17,9 +17,9 @@ import frontBack from "../images/frontback.png"
 const initialState = {
     productsData:[
         {img:"welcom",text:'discover the range', textSec:"Click anywhere to use",},
-        {img:Can1,text:'discover the range', textSec:"Click anywhere to use",},
-        {img:Can2,text:'discover the range', textSec:"Click anywhere to use",},
-        {img:Can3,text:'discover the range', textSec:"Click anywhere to use",}
+        {img:Can1,text:"Oh that's Grapes", textSec:"Queensland Blue Grapes and Coca",},
+        {img:Can2,text:"Oh that's Banana", textSec:"Almond Milk and Apple",},
+        {img:Can3,text:"Oh that's Orange", textSec:"Peckham Pear and Raspberry",}
     ],
     productsBackData:[
         frontBack,Can1Back,Can2Back,Can3Back

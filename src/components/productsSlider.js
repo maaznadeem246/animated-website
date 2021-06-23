@@ -31,7 +31,7 @@ scroll-behavior: unset;
 
 
 const pr = [
-  ({style,displayArrCursor}) =>  <animated.div className="containerDiv"  style={{'userSelect':'none' ,...style}}  ><div onMouseOver={(e)=> { displayArrCursor(false)}} onMouseLeave={(e)=> { displayArrCursor(true)}}> <Welcome /></div></animated.div>  ,
+  ({style,displayArrCursor}) =>  <animated.div className="containerDiv"  style={{'userSelect':'none' ,...style}}  ><div onMouseEnter={(e)=> { displayArrCursor(false)}} onMouseLeave={(e)=> { displayArrCursor(true)}}> <Welcome /></div></animated.div>  ,
   ({style,data,displayArrCursor}) =>  <Product displayArrCursor={displayArrCursor} pim={data.img} style={{'userSelect':'none' ,...style}} />,
   ({style,data,displayArrCursor}) =>  <Product displayArrCursor={displayArrCursor} pim={data.img} style={{'userSelect':'none' ,...style}} />,
   ({style,data,displayArrCursor}) =>  <Product displayArrCursor={displayArrCursor} pim={data.img} style={{'userSelect':'none' ,...style}} />,
@@ -50,6 +50,9 @@ function ProductsSlider(){
     const [width] = useWindowSize();
     const [scrWidth, setScrWidth] = useState(0)
     const [hoverIt, setHoverIt] = useState(false)
+    const [isMobile, setIsMobile] = useState()
+
+
     const [productImages, setProductImages] = useState(productsData)
     // let neA = [...productImages];
     // neA.splice(1,neA.length-1).forEach((img) => imgCache.read(img));
@@ -69,45 +72,20 @@ function ProductsSlider(){
  
       })
 
-
-      // useEffect(() => {
-      //   console.log(productsData)
-      //   console.log(index)
-      //   setProductImages(productsData)
-      // },[productsData.length])
+      useEffect(()=>{
+        console.log(width)
+        setIsMobile((width < 430))
+    },[width])
 
       useEffect(() => {
-
-        //console.log(transRef)
-
         transRef.start()
         updatePrdctAnimIndex(index)      
-        
-      //  console.log(index)
+
       }, [index])
-
-      const changeAnimDir = (e) => {
-        e.stopPropagation();         
-        //  let newAr = [...productImages]
-        // // setProductImages([productImages[0],...newAr.reverse()]);'
-        // let indexVal = index;
-        // let getSlicedValueAfter = newAr.slice(indexVal,newAr.length)
-        // let getSlicedValueBefore = newAr.slice(0,indexVal)
-        // console.log(getSlicedValueAfter)
-        // console.log(getSlicedValueBefore)
-        // let alteredArr = !ts ?  [,...getSlicedValueAfter.reverse(),...getSlicedValueBefore] : [...getSlicedValueAfter,...getSlicedValueBefore]
-        // setProductImages(alteredArr);
-  //      setTs((prev)=>!prev);
-          // console.log(transRef.)
-//          setIndex((prev) => prev == 0 ?  productImages.length -1 : prev- 1)
-
-      }
 
       const chnL = () => { 
         setTs(false);
-        // console.log(transRef.)
         setIndex((prev) => prev == 0 ?  productImages.length -1 : prev- 1)
-
       }
 
       const chnR = () => { 
@@ -171,7 +149,9 @@ function ProductsSlider(){
                 </>
                 )
             })}
-             <ProductHover displayArrCursor={displayArrCursor} hideHoverDiv={hideHoverDiv} hoverIt={hoverIt} />
+            { !isMobile &&
+              <ProductHover displayArrCursor={displayArrCursor} hideHoverDiv={hideHoverDiv} hoverIt={hoverIt} />
+            }
         </MainDiv>
 
    </>

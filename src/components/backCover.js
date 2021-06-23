@@ -3,6 +3,7 @@ import { useTransition, config, animated, useSpringRef, useSpring } from '@react
 import useAppData from "../hooks/useAppData"
 import styled from "styled-components"
 import {imgCache} from "../utilities/imageCache"
+import useWindowSize from "../hooks/useWindowSize"
 
 const CoverDiv = styled.div`
 display: flex;
@@ -42,6 +43,10 @@ function BackCover(){
     productBack.forEach((img) => imgCache.read(img));
     const [index, setIndex] = useState(0)
     const [as, setAs] = useState(true)
+    const [width]= useWindowSize()
+    const [isMobile, setIsMobile] = useState()
+
+
     // const onClick = useCallback(() => setIndex(state => (state + 1) % productBack.length), [])
     const transRef = useSpringRef()
 
@@ -57,6 +62,11 @@ function BackCover(){
     })
 
     
+    useEffect(()=>{
+      console.log(width)
+      setIsMobile(width < 430)
+  },[width])
+
       // useEffect(() => {
       //   updatePrdctAnimIndex(index)
       //   //console.log(transRef)
@@ -98,7 +108,7 @@ function BackCover(){
                 return( 
                   <>
 
-                <PrPage style={{'object-fit':'cover', width:'40%',...style}} src={Page} />
+                <PrPage style={{'object-fit':'cover', width: isMobile ? '100%': '40%', height: isMobile ? '30%': '100%',...style}} src={Page} />
                 
             {/* } */}
                 </>

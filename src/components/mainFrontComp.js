@@ -1,7 +1,8 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { useSpring,animated } from "react-spring";
 import styled from "styled-components";
 import useAppData from "../hooks/useAppData";
+import useWindowSize from "../hooks/useWindowSize";
 
 
 const AppName = styled.h1`
@@ -59,16 +60,23 @@ const AnimatedDivs = ({children,direction='default'}) => {
 
 function MainFrontComp(){
     const {appName} = useAppData();    
+    const [width]= useWindowSize()
+    const [isMobile, setIsMobile] = useState()
 
+    useEffect(()=>{
+        console.log(width)
+        setIsMobile(width < 430)
+    },[width])
     return (
         <>
        
         <AppName>
             <AnimatedDivs direction='up' >
-                <div className="appNameCss">{appName}</div> 
+                <div className="appNameCss" style={{ 'font-size':  isMobile ?'2rem':'2.5rem'}}>{appName}</div> 
             </AnimatedDivs>
         </AppName>
 
+        {!isMobile &&<>
         <About>
             <AnimatedDivs direction='right' >
                 ABOUT
@@ -79,6 +87,7 @@ function MainFrontComp(){
                 MENU
             </AnimatedDivs>
         </Menu>
+        </>}
         </>
     )
 }
