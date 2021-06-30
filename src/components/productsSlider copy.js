@@ -1,5 +1,5 @@
 import React, { useState, useCallback,  useEffect, useRef } from 'react'
-import { useTransition, config, animated, useSpringRef, useSprings } from '@react-spring/web'
+import { useTransition, config, animated, useSpringRef } from '@react-spring/web'
 import styled from 'styled-components'
 import Product from './product'
 import Welcome from './welcomComp'
@@ -9,7 +9,6 @@ import displayArrCursor from "./displayArrCursor"
 import {imgCache} from "../utilities/imageCache"
 import ProductHover from './productHover'
 import { useGesture } from 'react-use-gesture'
-import { clamp } from 'lodash-es'
 
 const MainDiv = styled.div`
 
@@ -24,7 +23,7 @@ right: 0;
 left: 0;
 bottom: 0;
 height: 100vh;
-
+user-select:none;
 scroll-behavior: unset;
 `
 
@@ -33,10 +32,10 @@ scroll-behavior: unset;
 
 
 const pr = [
-  ({style,displayArrCursor, bind}) =>  <animated.div className="containerDiv" {...bind()}  style={{'userSelect':'none', 'touch-action':'none' ,...style}}  ><div onMouseEnter={(e)=> { displayArrCursor(false); console.log('fd')}} onMouseLeave={(e)=> { displayArrCursor(true)}}> <Welcome /></div></animated.div>  ,
-  ({style,data,displayArrCursor, bind}) =>  <Product bind={bind} displayArrCursor={displayArrCursor} pim={data.img} style={{'userSelect':'none', 'touch-action':'none' ,...style}} />,
-  ({style,data,displayArrCursor, bind}) =>  <Product bind={bind} displayArrCursor={displayArrCursor} pim={data.img} style={{'userSelect':'none', 'touch-action':'none' ,...style}} />,
-  ({style,data,displayArrCursor, bind}) =>  <Product bind={bind} displayArrCursor={displayArrCursor} pim={data.img} style={{'userSelect':'none', 'touch-action':'none' ,...style}} />,
+  ({style,displayArrCursor}) =>  <animated.div className="containerDiv"  style={{'userSelect':'none' ,...style}}  ><div onMouseEnter={(e)=> { displayArrCursor(false)}} onMouseLeave={(e)=> { displayArrCursor(true)}}> <Welcome /></div></animated.div>  ,
+  ({style,data,displayArrCursor}) =>  <Product displayArrCursor={displayArrCursor} pim={data.img} style={{'userSelect':'none' ,...style}} />,
+  ({style,data,displayArrCursor}) =>  <Product displayArrCursor={displayArrCursor} pim={data.img} style={{'userSelect':'none' ,...style}} />,
+  ({style,data,displayArrCursor}) =>  <Product displayArrCursor={displayArrCursor} pim={data.img} style={{'userSelect':'none' ,...style}} />,
   
 ]
 
@@ -50,9 +49,9 @@ function ProductsSlider(){
     // ]
     const [index, setIndex] = useState(0)
     const [width] = useWindowSize();
-    const [scrWidth, setScrWidth] = useState(width)
+    const [scrWidth, setScrWidth] = useState(0)
     const [hoverIt, setHoverIt] = useState(false)
-    const [isMobile, setIsMobile] = useState(false)
+    const [isMobile, setIsMobile] = useState()
 
 
     const [productImages, setProductImages] = useState(productsData)
@@ -61,10 +60,6 @@ function ProductsSlider(){
     // const onClick = useCallback(() => setIndex(state => (state + 1) % productImages.length), [])
     const transRef = useSpringRef()
     const [ts, setTs] = useState(true)
-
-
-    const [props, set] = useSprings(productImages.length, (i) => ({ x: (i < productImages.length - 1 ? i : -1) * window.innerWidth }))
-
     const transitions = useTransition(index, {
         ref: transRef,
         keys: null,
@@ -79,24 +74,23 @@ function ProductsSlider(){
       })
 
 
-      const bind = useGesture({
-        onDrag: ({ down, active, distance,direction: [xDir], cancel,  movement: [mx],  offset: [x] }) => {
-          if(isMobile){
-            console.log('mo')
-          if (active && distance > window.innerWidth / 2){
-            cancel((setIndex(clamp(index + (xDir > 0 ? -1 : 1), 0, productImages.length - 1))))
-          }
-          set.start((i) => {
-            if (i < index - 1 || i > index + 1) return { display: 'none' }
-            const xx =(i - index) * window.innerWidth + (active ? mx : 0)
-            return ({ x: xx})
-          })
-        }
-        
-        },
-
+      const bind = useGesture(({ args: [index], down, delta: [xDelta], distance, direction: [xDir], velocity }) => {
+        const trigger = velocity > 0.2 // If you flick hard enough it should trigger the card to fly out
+        const dir = xDir < 0 ? -1 : 1 // Direction should either point left or right
+        // transRef.start({
+        //   to:{transform()}
+        // })
+       // if (!down && trigger) gone.add(index) // If button/finger's up and trigger velocity is reached, we flag the card ready to fly out
+        // set(i => {
+        //   if (index !== i) return // We're only interested in changing spring-data for the current spring
+        //   const isGone = gone.has(index)
+        //   const x = isGone ? (200 + window.innerWidth) * dir : down ? xDelta : 0 // When a card is gone it flys out left or right, otherwise goes back to zero
+        //   const rot = xDelta / 100 + (isGone ? dir * 10 * velocity : 0) // How much the card tilts, flicking it harder makes it rotate faster
+        //   const scale = down ? 1.1 : 1 // Active cards lift up a bit
+        //   return { x, rot, scale, delay: undefined, config: { friction: 50, tension: down ? 800 : isGone ? 200 : 500 } }
+        // })
+        // if (!down && gone.size === cards.length) setTimeout(() => gone.clear() || set(i => to(i)), 600)
       })
-      
        
       useEffect(()=>{
         console.log(width)
@@ -104,10 +98,7 @@ function ProductsSlider(){
     },[width])
 
       useEffect(() => {
-        set.start((i) => {
-          const xx =(i - index) * window.innerWidth 
-          return ({ x: xx})
-        })
+        transRef.start()
         updatePrdctAnimIndex(index)      
 
       }, [index])
@@ -124,14 +115,13 @@ function ProductsSlider(){
       }
 
       const onClick = useCallback( (e) => {
-        if(!isMobile){
-          if(width / 2 < e.clientX ){
-            chnR()
-          }else{
-            chnL()
-          }
-          hideHoverDiv();
+        console.log(e.clientX)
+        if(width / 2 < e.clientX ){
+          chnR()
+        }else{
+          chnL()
         }
+        hideHoverDiv();
       })
 
       useEffect(()=>{
@@ -141,8 +131,8 @@ function ProductsSlider(){
 
 
       const cursorDivfunct = (v) => {
-       displayArrCursor(v)
-       showHoverDiv()
+        displayArrCursor(v)
+        showHoverDiv()
       } 
 
       const hideHoverDiv = () => {
@@ -152,7 +142,6 @@ function ProductsSlider(){
       }
 
       const showHoverDiv = () => {
-        
         displayArrCursor(false)
         setHoverIt(true)
       }
@@ -161,11 +150,11 @@ function ProductsSlider(){
       <>
         {/* <button onClick={chnL} >left</button>
 
-        <button onClick={chnR}>right</button>  */}
+        <button onClick={chnR}>right</button> */}
         <MainDiv className='container' onClick={onClick}>
 
-            { props.map(({x}, i) => {
-            
+            { transitions((style, i) => {
+              console.log(style)
                 const Page = productImages[i];
                 const PrPage = pr[i];
 
@@ -174,7 +163,7 @@ function ProductsSlider(){
                   <>
                   {/* {Page == 'welcome' ? 
                 : */}
-                <PrPage displayArrCursor={cursorDivfunct} bind={bind}   style={{width:isMobile?'100%':'fit-content',x}} data={Page} />
+                <PrPage displayArrCursor={cursorDivfunct} style={style} data={Page} />
                 
             {/* } */}
                 </>

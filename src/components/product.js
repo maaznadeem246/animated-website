@@ -12,7 +12,7 @@ const StyledImg = styled.img`
     
 `
 
-function Product({pim,style,displayArrCursor}){
+function Product({pim,style,displayArrCursor, bind=()=>{}}){
     
     const [width]= useWindowSize()
     const [isMobile, setIsMobile] = useState()
@@ -22,7 +22,7 @@ function Product({pim,style,displayArrCursor}){
     },[width])
 
     return (
-           <animated.div  className="containerDiv" style={{'user-select':'none' ,...style}}  >
+           <animated.div  {...bind()}  className="containerDiv" style={{...style}}   >
                <StyledImg width={isMobile ? '130px' : '200px'} height={isMobile ? '40%' : '50%'} onMouseEnter={()=>displayArrCursor(false)}  src={pim}  />
             </animated.div>
     )

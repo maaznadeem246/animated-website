@@ -32,6 +32,12 @@ function MainComp(){
     const [ind, setIndex] = useState(0)
     const [scrWidth, setScrWidth] = useState(0)
     const [brColors] = useState(['white','#1f78f0ba','#fece2fba','#f04e23ba'])
+       const [isMobile, setIsMobile] = useState()
+
+    useEffect(()=>{
+        console.log(width)
+        setIsMobile((width < 430))
+    },[width])
     const stylesAnim = useSpring({
         config:{duration:700},
         delay:500,
@@ -50,6 +56,7 @@ function MainComp(){
           
         let cursor = document.querySelector(".cursor");
         console.log(cursor.style.width)
+        if(!isMobile){
         window.addEventListener("mousemove", animation);
         function animation (e){
            
@@ -75,6 +82,7 @@ function MainComp(){
         function onEnter(e){
             cursor.style.display = 'none';
         }
+      }
       },[scrWidth])
 
 
@@ -85,7 +93,7 @@ function MainComp(){
       
     return (
         <>
-        <div className="cursor"></div>
+        <div className="cursor" style={{display:!isMobile?'block':'none'}} ></div>
         <animated.div   className={styles.mainD} style={stylesAnim}>  
                        
             <BackDiv brColor={brColors[ind] || brColors[1]}>

@@ -12,6 +12,7 @@ const HoverDiv = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    
     flex-direction:column;
 `
 
@@ -31,7 +32,7 @@ function ProductHover({hoverIt, hideHoverDiv, displayArrCursor}){
     const [productData, setProductData] = useState({})
     const [hoverToggle, setHoverToggle] = useState(false)
     const [fntColors] = useState(['inherit','#1f78f0ba','#fece2f','#f04e23ba'])
-    const [innerSyle,innerApi] = useSpring(() => ({}))
+    const [innerSyle,innerApi] = useSpring(() => ({display:'none'}))
     const [innerDStyle,innerDApi] = useSpring(() => ({display:'none'}))
     const [innerHeadStyle,innerHeadApi] = useSpring(() => ({
         opacity:0,
@@ -47,8 +48,10 @@ function ProductHover({hoverIt, hideHoverDiv, displayArrCursor}){
 
     useEffect(()=>{
         setHoverToggle(hoverIt)
-        // // console.log(hoverIt)
+        console.log(hoverIt)
+
         if(hoverIt){
+            console.log('hoverIt')
             innerApi.start({to:[{display:'block'},{opacity:1 }]})
             innerDApi.start({display:'flex'})
             innerHeadApi.start({
@@ -88,7 +91,7 @@ function ProductHover({hoverIt, hideHoverDiv, displayArrCursor}){
         <>
                 <animated.div className="hoverInnerDiv" style={{...innerSyle}} />
     
-        <animated.div  className="hoverDiv" style={{...innerDStyle}} onClick={onClick} onMouseLeave={onLeave}>
+        <animated.div  className="hoverDiv" style={{...innerDStyle, }} onClick={onClick} onMouseLeave={onLeave}>
             { Object.keys(productData).length != 0 &&
                 <>
                     <animated.div className="hoverDivHead" style={{...innerHeadStyle, color:fntColors[index]}}>{productData.text}</animated.div>
