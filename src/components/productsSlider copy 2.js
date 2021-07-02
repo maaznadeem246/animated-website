@@ -80,16 +80,12 @@ function ProductsSlider(){
 
 
       const bind = useGesture({
-        onDrag: ({ down, active, distance,direction: [xDir], velocity, cancel,  movement: [mx],  offset: [x] }) => {
+        onDrag: ({ down, active, distance,direction: [xDir], cancel,  movement: [mx],  offset: [x] }) => {
           if(isMobile){
             console.log('mo')
-            const trigger = velocity > 0.2
-          if (active && distance > (window.innerWidth / 2)){
+          if (active && distance > window.innerWidth / 2){
             cancel((setIndex(clamp(index + (xDir > 0 ? -1 : 1), 0, productImages.length - 1))))
           }
-          // if( !down && trigger ){
-          //   setIndex(clamp(index + (xDir > 0 ? -1 : 1), 0, productImages.length - 1))
-          // }
           set.start((i) => {
             if (i < index - 1 || i > index + 1) return { display: 'none' }
             const xx =(i - index) * window.innerWidth + (active ? mx : 0)
@@ -128,14 +124,14 @@ function ProductsSlider(){
       }
 
       const onClick = useCallback( (e) => {
-        // if(!isMobile){
+        if(!isMobile){
           if(width / 2 < e.clientX ){
             chnR()
           }else{
             chnL()
           }
           hideHoverDiv();
-        // }
+        }
       })
 
       useEffect(()=>{
@@ -145,19 +141,19 @@ function ProductsSlider(){
 
 
       const cursorDivfunct = (v) => {
-        if(!isMobile)  displayArrCursor(v)
+       displayArrCursor(v)
        showHoverDiv()
       } 
 
       const hideHoverDiv = () => {
         // if(index == 0  
-        if(!isMobile)  displayArrCursor(true); 
+        displayArrCursor(true); 
         setHoverIt(false)
       }
 
       const showHoverDiv = () => {
         
-        if(!isMobile)  displayArrCursor(false)
+        displayArrCursor(false)
         setHoverIt(true)
       }
     

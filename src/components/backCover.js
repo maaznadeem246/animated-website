@@ -55,9 +55,9 @@ function BackCover(){
       ref: transRef,
       keys: null,
 
-      from: { opacity: 0, transform:'scale(1.5)'}, //transform:'scale(0.5)'
-      enter: { opacity: 1, transform:'scale(1)' }, 
-      leave: { opacity: 0, transform:'scale(0.5)' },  
+      from: { opacity: 0,}, // transform:'scale(1.5)'
+      enter: { opacity: 1,  },  //transform:'scale(1)'
+      leave: { opacity: 0, }, // transform:'scale(0.5)'  
       config: { duration: 600 },
     })
 
@@ -102,7 +102,7 @@ function BackCover(){
     return(
         <CoverDiv >
           { transitions((style, i) => {
-              console.log(style)
+   
                 const Page = productBack[i]
                 const PrPage = pr[i]
                 return( 
