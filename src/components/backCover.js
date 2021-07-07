@@ -96,24 +96,20 @@ function BackCover(){
       //   })
       // }
 
-      
+
 
 
     return(
         <CoverDiv >
           { transitions((style, i) => {
-   
-                const Page = productBack[i]
-                const PrPage = pr[i]
-                return( 
-                  <>
-
-                <PrPage style={{'object-fit':'cover', width: isMobile ? '100%': '40%', height: isMobile ? '30%': '100%',...style}} src={Page} />
-                
-            {/* } */}
-                </>
-                )
-            })}
+            const Page = productBack[i]
+            const PrPage = pr[i]
+            return( 
+            <>
+              <PrPage style={{'object-fit':'cover', width: isMobile ? '100%': '40%', height: isMobile ? '30%': '100%',...style}} src={Page} />
+            </>
+            )
+          })}
 
         </CoverDiv>
     )

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import useAppData from "../hooks/useAppData"
 import { useTransition, config, animated, useSpringRef, useSpring } from '@react-spring/web'
+import useWindowSize from "../hooks/useWindowSize"
 
 
 const HoverDiv = styled.div`
@@ -22,12 +23,20 @@ position: absolute;
 width:40%;
 margin:0;
 background-color:#f9f4eaa6;
+`
 
+const TextDiv = styled.div`
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items:center;
 `
 
 function ProductHover({hoverIt, hideHoverDiv, displayArrCursor}){
-
+    const [width] = useWindowSize();
     const {prdctAnimIndex,productsData} = useAppData()
+    const [isMobile, setIsMobile] = useState(false)
     const [index, setIndex] = useState();
     const [productData, setProductData] = useState({})
     const [hoverToggle, setHoverToggle] = useState(false)
@@ -39,11 +48,28 @@ function ProductHover({hoverIt, hideHoverDiv, displayArrCursor}){
         transform:'translate3d(-8%,0,0)'
     }))
 
+    const [mobileText,mobileTextApi] = useSpring(() => ({
+        opacity:0,
+        transform:'translate3d(-8%,0,0)',
+        // delay:3000,
+        // config:{duration:2000}
+        
+      }))
+
+
+    useEffect(()=>{
+        console.log(width)
+        setIsMobile((width < 430))
+    },[width])
 
     useEffect(()=> {
+        mobileTextApi.start({opacity:0,   transform:'translate3d(-8%,0,0)'})
         setIndex(prdctAnimIndex)
         setProductData(productsData[prdctAnimIndex])
+        mobileTextApi.start({ opacity:1,   transform:'translate3d(0%,0,0)'})
     },[prdctAnimIndex])
+
+
 
 
     useEffect(()=>{
@@ -72,7 +98,7 @@ function ProductHover({hoverIt, hideHoverDiv, displayArrCursor}){
     },[hoverIt])
 
     useEffect(()=> {
-
+//       mobileTextApi.start({ delay:2000,opacity:1,  transform:'translate3d(0%,0,0)'})
     },[])
 
     const onLeave = () => {
@@ -89,10 +115,11 @@ function ProductHover({hoverIt, hideHoverDiv, displayArrCursor}){
     }
     return(
         <>
-                <animated.div className="hoverInnerDiv" style={{...innerSyle}} />
-    
+        { !isMobile ?
+        <>
+        <animated.div className="hoverInnerDiv" style={{...innerSyle}} />
         <animated.div  className="hoverDiv" style={{...innerDStyle, }} onClick={onClick} onMouseLeave={onLeave}>
-            { Object.keys(productData).length != 0 &&
+            { productData && Object.keys(productData).length != 0 &&
                 <>
                     <animated.div className="hoverDivHead" style={{...innerHeadStyle, color:fntColors[index]}}>{productData.text}</animated.div>
                     <animated.div className="hoverDivHeadSub" style={{...innerHeadStyle, color:fntColors[index]}} >{productData.textSec}</animated.div>
@@ -100,6 +127,16 @@ function ProductHover({hoverIt, hideHoverDiv, displayArrCursor}){
             }
         </animated.div>
 
+        </>:
+            <TextDiv>
+                { productData && Object.keys(productData).length != 0 &&
+                     <>
+                     <animated.div className="prdctText" style={{...mobileText, color:fntColors[index]}}>{productData.text}</animated.div>
+                     <animated.div className="prdctTextSub" style={{...mobileText, color:fntColors[index]}} >{productData.textSec}</animated.div>
+                    </> 
+                }
+            </TextDiv>
+        }
         </>
     )
 }

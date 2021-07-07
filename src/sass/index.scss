@@ -131,7 +131,19 @@ html,body{
 .hoverDivHead{
     font-family: $defaultHvrDivFont;
     font-size: $defaultHvrDivSize;
-    font-weight: $defaultHvrDivWeight;
+    font-weight: $defaultHvrDivWeight;  
+}
 
-  
+
+.prdctTextSub{
+    font-size: 1rem;
+    font-weight: 700;
+    will-change: opacity, transform;
+}
+
+.prdctText{
+    font-family: $defaultHvrDivFont;
+    font-size: 3rem;
+    font-weight: $defaultHvrDivWeight;  
+    will-change: opacity, transform;
 }

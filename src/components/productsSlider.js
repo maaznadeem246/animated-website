@@ -184,9 +184,7 @@ function ProductsSlider(){
                 </>
                 )
             })}
-            { !isMobile &&
-              <ProductHover displayArrCursor={displayArrCursor} hideHoverDiv={hideHoverDiv} hoverIt={hoverIt} />
-            }
+            <ProductHover displayArrCursor={displayArrCursor} hideHoverDiv={hideHoverDiv} hoverIt={hoverIt} />
         </MainDiv>
 
    </>
