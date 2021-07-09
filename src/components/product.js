@@ -13,7 +13,7 @@ const StyledImg = styled.img`
 `
 
 function Product({pim,style,displayArrCursor, bind=()=>{}}){
-    
+
     const [width]= useWindowSize()
     const [isMobile, setIsMobile] = useState()
     useEffect(()=>{
@@ -21,10 +21,21 @@ function Product({pim,style,displayArrCursor, bind=()=>{}}){
         setIsMobile(width < 430)
     },[width])
 
+    const styles = (isMobile) => {
+        return {
+            width: isMobile ? '130px' : '200px', height : isMobile ? '40%' : '50%', 'cursor': 'pointer', userSelect:'none',
+           
+        }
+    }
+
     return (
-           <animated.div  {...bind()}  className="containerDiv" style={{...style}}   >
-               <StyledImg width={isMobile ? '130px' : '200px'} height={isMobile ? '40%' : '50%'} onMouseEnter={()=>displayArrCursor(false)}  src={pim}  />
-            </animated.div>
+        <>
+        {/* //    <animated.div  {...bind()}  className="containerDiv" style={{...style}}   >
+        //        <StyledImg width={isMobile ? '130px' : '200px'} height={isMobile ? '40%' : '50%'} onMouseEnter={()=>displayArrCursor(false)}  src={pim}  />
+        //     </animated.div> */}
+        <animated.img   className={"containerDiv"} onMouseEnter={()=>displayArrCursor(false)} style={{...style, ...styles(isMobile)  }}   src={pim} />
+        { isMobile && <animated.div  {...bind()} className={'containerDivWAft'} style={{...style, height : '40%',}} /> }
+    </>
     )
 }
 

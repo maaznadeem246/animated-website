@@ -63,7 +63,7 @@ function ProductsSlider(){
     const [ts, setTs] = useState(true)
 
 
-    const [props, set] = useSprings(productImages.length, (i) => ({ x: (i < productImages.length - 1 ? i : -1) * window.innerWidth }))
+    const [props, set] = useSprings(productImages.length, (i) => ({ x: (i < productImages.length - 1 ? i : -1) * window.innerWidth, config:{ ...config.stiff },  }))
 
     const transitions = useTransition(index, {
         ref: transRef,
@@ -71,7 +71,7 @@ function ProductsSlider(){
         unique: true,
         reverse:true,
 
-        config: config.gentle,
+        config: config.stiff,
         from: { opacity: 0, transform: `translate3d(${ts?'':'-'}100%,0,0)` },
         enter: { opacity: 1, transform: 'translate3d(0%,0,0)' },
         leave: { opacity: 0, transform: `translate3d(${ts?'-':''}100%,0,0)` },
