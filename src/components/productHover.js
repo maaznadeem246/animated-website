@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import useAppData from "../hooks/useAppData"
-import { useTransition, config, animated, useSpringRef, useSpring } from '@react-spring/web'
+import { useTransition, config, animated, useSpringRef, useSprings, useSpring } from '@react-spring/web'
 import useWindowSize from "../hooks/useWindowSize"
+
+
 
 
 const HoverDiv = styled.div`
@@ -48,13 +50,12 @@ function ProductHover({hoverIt, hideHoverDiv, displayArrCursor}){
         transform:'translate3d(-8%,0,0)'
     }))
 
-    const [mobileText,mobileTextApi] = useSpring(() => ({
-        opacity:0,
-        transform:'translate3d(-8%,0,0)',
-        // delay:3000,
-        // config:{duration:2000}
-        
-      }))
+    const [mobileText,mobileTextApi] = useSprings(fntColors.length,
+        i => ({
+            opacity:0,
+            transform:'translate3d(-8%,0,0)',        
+          })
+        )
 
 
     useEffect(()=>{
@@ -63,11 +64,10 @@ function ProductHover({hoverIt, hideHoverDiv, displayArrCursor}){
     },[width])
 
     useEffect(()=> {
-        mobileTextApi.start({opacity:0,   transform:'translate3d(-8%,0,0)'})
+        mobileTextApi.start(i=>({display: prdctAnimIndex ==i ? 'block' : 'none' ,opacity: prdctAnimIndex ==i ? 1 : 0 ,   transform:  prdctAnimIndex == i ? 'translate3d(0%,0,0)' : 'translate3d(0,30%,0)'}))
         setIndex(prdctAnimIndex)
         setProductData(productsData[prdctAnimIndex])
-        mobileTextApi.start({ opacity:1,   transform:'translate3d(0%,0,0)'})
-    },[prdctAnimIndex])
+    },[prdctAnimIndex, ])
 
 
 
@@ -130,10 +130,10 @@ function ProductHover({hoverIt, hideHoverDiv, displayArrCursor}){
         </>:
             <TextDiv>
                 { productData && Object.keys(productData).length != 0 &&
-                     <>
-                     <animated.div className="prdctText" style={{...mobileText, color:fntColors[index]}}>{productData.text}</animated.div>
-                     <animated.div className="prdctTextSub" style={{...mobileText, color:fntColors[index]}} >{productData.textSec}</animated.div>
-                    </> 
+                     mobileText.map((style,i) => (<>
+                     <animated.div className="prdctText" style={{...style, color:fntColors[i]}}>{productData.text}</animated.div>
+                     <animated.div className="prdctTextSub" style={{...style, color:fntColors[i]}} >{productData.textSec}</animated.div>
+                    </>)) 
                 }
             </TextDiv>
         }
