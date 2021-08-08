@@ -44,42 +44,20 @@ const pr = [
 function ProductsSlider(){
   const {productsData,prdctAnimIndex, updatePrdctAnimIndex } = useAppData()
   const [gone] = useState(() => new Set())
-    // const productImages = [
-    //   'welcome',
-    //   Can1,Can2,Can3
-    // ]
+
     const [index, setIndex] = useState(0)
     const [width] = useWindowSize();
     const [scrWidth, setScrWidth] = useState(width)
     const [hoverIt, setHoverIt] = useState(false)
     const [isMobile, setIsMobile] = useState(false)
 
-
     const [productImages, setProductImages] = useState(productsData)
-    // let neA = [...productImages];
-    // neA.splice(1,neA.length-1).forEach((img) => imgCache.read(img));
-    // const onClick = useCallback(() => setIndex(state => (state + 1) % productImages.length), [])
-    const transRef = useSpringRef()
+    
     const [ts, setTs] = useState(true)
 
-
-    const [props, set] = useSprings(productImages.length, (i) => ({ x: (i < productImages.length - 1 ? i : -1) * window.innerWidth, config:{ ...config.stiff },  }))
-
-    const transitions = useTransition(index, {
-        ref: transRef,
-        keys: null,
-        unique: true,
-        reverse:true,
-
-        config: config.stiff,
-        from: { opacity: 0, transform: `translate3d(${ts?'':'-'}100%,0,0)` },
-        enter: { opacity: 1, transform: 'translate3d(0%,0,0)' },
-        leave: { opacity: 0, transform: `translate3d(${ts?'-':''}100%,0,0)` },
- 
-      })
-
-
-      const bind = useGesture({
+    const [props, set] = useSprings(productImages.length, (i) => ({ x: (i < productImages.length - 1 ? i - index : -1) * window.innerWidth, config:{ ...config.stiff },}))
+    
+    const bind = useGesture({
         onDrag: ({ down, active, distance,direction: [xDir], velocity, cancel,  movement: [mx],  offset: [x] }) => {
           if(isMobile){
             console.log('mo')
@@ -87,13 +65,13 @@ function ProductsSlider(){
           if (active && distance > (window.innerWidth / 2)){
             cancel((setIndex(clamp(index + (xDir > 0 ? -1 : 1), 0, productImages.length - 1))))
           }
-          // if( !down && trigger ){
-          //   setIndex(clamp(index + (xDir > 0 ? -1 : 1), 0, productImages.length - 1))
-          // }
+        
           set.start((i) => {
-            if (i < index - 1 || i > index + 1) return { display: 'none' }
-            const xx =(i - index) * window.innerWidth + (active ? mx : 0)
-            return ({ x: xx})
+            // if (i < index - 1 || i > index + 1) return { display: 'none' }
+ //           console.log(i == (productImages.length-1) - index)
+            const xx = (i - index) * window.innerWidth + (active ? mx : 0)
+            //     const xx =(i - index) * window.innerWidth + (active ? mx : 0)
+            return ({ x: xx,})
           })
         }
         
@@ -107,10 +85,20 @@ function ProductsSlider(){
         setIsMobile((width < 430))
     },[width])
 
+    const getPost = (iin,indx,ttl) => {
+      // if(index == 0 && iin == ttl - (1 + index) ){
+      //   return -window.innerWidth
+      // }else{
+      //   return (iin - indx) * window.innerWidth
+      // }
+      return  iin == ttl - (1 + index) ? -window.innerWidth : (iin - indx) *  window.innerWidth
+    }
       useEffect(() => {
         set.start((i) => {
-          const xx =(i - index) * window.innerWidth 
-          return ({ x: xx})
+          // console.log('sd')
+          // console.log( i == (productImages.length-1) - index)
+         const xx =   (i - index) * window.innerWidth
+          return ({x:xx})
         })
         updatePrdctAnimIndex(index)      
 
@@ -128,15 +116,14 @@ function ProductsSlider(){
       }
 
       const onClick = useCallback( (e) => {
-        // if(!isMobile){
+      
           if(width / 2 < e.clientX ){
             chnR()
           }else{
             chnL()
           }
           hideHoverDiv();
-        // }
-      })
+       })
 
       useEffect(()=>{
         console.log(width)
@@ -178,7 +165,7 @@ function ProductsSlider(){
                   <>
                   {/* {Page == 'welcome' ? 
                 : */}
-                <PrPage displayArrCursor={cursorDivfunct} bind={bind}   style={{width:isMobile?'100%':'fit-content',x}} data={Page} />
+                <PrPage displayArrCursor={cursorDivfunct} bind={bind}   style={{width:isMobile?'100%':'fit-content',x,position:'absolute'}} data={Page} />
                 
             {/* } */}
                 </>

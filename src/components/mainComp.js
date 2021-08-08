@@ -33,7 +33,8 @@ function MainComp(){
     const [scrWidth, setScrWidth] = useState(0)
     const [brColors] = useState(['white','#1f78f0ba','#fece2fba','#f04e23ba'])
        const [isMobile, setIsMobile] = useState()
-
+    
+     
     useEffect(()=>{
         console.log(width)
         setIsMobile((width < 430))
@@ -93,6 +94,7 @@ function MainComp(){
       
     return (
         <>
+
         <div className="cursor" style={{display:!isMobile?'block':'none'}} ></div>
         <animated.div   className={styles.mainD} style={stylesAnim}>  
                        

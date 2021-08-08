@@ -24,7 +24,9 @@ html,body{
 
 .container{
     width: 100%;
+    
     overflow: hidden;
+    position: 'relative',
 }
 
 .containerDiv{
@@ -154,3 +156,37 @@ html,body{
     font-weight: $defaultHvrDivWeight;  
     will-change: opacity, transform;
 }
+
+
+
+
+
+
+.canStyle{
+    width:150px;
+    height:250px;
+    border-radius:15px;
+    border:8px solid $defaultColor;
+    position:relative;
+   
+}
+
+// .canStyle:after{
+//     content:' ';
+//     width:inherit;
+//     height:8px;
+//     position:absolute;
+//     background:$defaultColor;
+//     top: 15px;
+// }
+
+
+
+// .canStyle:before{
+//     content:' ';
+//     width:inherit;
+//     height:8px;
+//     position:absolute;
+//     background:$defaultColor;
+//     bottom: 15px;
+// }

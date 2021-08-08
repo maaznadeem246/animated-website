@@ -106,7 +106,7 @@ function BackCover(){
             const PrPage = pr[i]
             return( 
             <>
-              <PrPage style={{'object-fit':'cover', width: isMobile ? '100%': '40%', height: isMobile ? '30%': '100%',...style}} src={Page} />
+              <PrPage style={{'object-fit':'cover', width: isMobile ? '100%': '40%', height: isMobile ? '30%': '100%',position:'absolute',...style}} src={Page} />
             </>
             )
           })}
