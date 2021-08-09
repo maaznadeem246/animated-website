@@ -1,6 +1,7 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 
 import { useSpring, animated } from "react-spring"
+import useWindowSize from "../hooks/useWindowSize"
 import colorVariables from "../sass/customvariables.scss"
 import "../sass/index.scss" 
 
@@ -31,6 +32,11 @@ const styles = ()=>({
 
 function Loading(){
     const classes = styles() 
+    const [width] = useWindowSize();
+    const [isMobile, setIsMobile] = useState(false)
+    console.log(width)
+
+
     const stylesSp = useSpring({
         loop:true,
         to: [{height: '43%',}, { height: '0%' }],
@@ -43,11 +49,17 @@ function Loading(){
         from: {height: '0%', opacity: 0.7  },
         config:{duration:1500,}
       })
+
+      useEffect(()=>{
+        console.log(width)
+        setIsMobile((width < 430))
+    },[width])
+
     return(
         <div style={classes.mainDiv}>
 
-        <div className="canStyle" >
-        <div  style={classes.textCss}>Loading</div> 
+        <div className="canStyle"  style={ {width:  isMobile ? '130px': '150px' , height: isMobile ?'210px' : '250px' }}>
+        <div  style={ {...classes.textCss, fontSize:  isMobile ? '1.4rem': '1.8rem'  }}>Loading</div> 
             <animated.div
                 style={{
                     position:'absolute',

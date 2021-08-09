@@ -3,7 +3,7 @@ import { useSpring,animated } from "react-spring";
 import styled from "styled-components";
 import useAppData from "../hooks/useAppData";
 import useWindowSize from "../hooks/useWindowSize";
-
+import colorVariables from "../sass/customvariables.scss"
 
 const AppName = styled.h1`
         text-align:center;
@@ -23,6 +23,40 @@ right:85px;
 margin:0;
 font-size:1.3rem;
 transform: translateY(0) translateX(100%) rotate(90deg);
+`
+
+const Ham = styled.div`
+position:absolute;
+top:40px;
+right:55px;
+`
+
+const HamMenu = styled.div`
+position:relative;
+height:5px;
+width:25px;
+border-radius:25%;
+top:13px;
+background-color:${colorVariables.defaultColor};
+&::after{
+    content:" ";
+    position:absolute;
+    height:5px;
+    width:25px;
+    border-radius:25%;
+    background-color:${colorVariables.defaultColor};
+    top:10px;
+}
+
+&::before{
+    content:" ";
+    position:absolute;
+    height:5px;
+    width:25px;
+    border-radius:25%;
+    background-color:${colorVariables.defaultColor};
+    bottom:10px;
+}
 
 `
 
@@ -76,7 +110,9 @@ function MainFrontComp(){
             </AnimatedDivs>
         </AppName>
 
-        {!isMobile &&<>
+
+
+        {!isMobile ?<>
         <About>
             <AnimatedDivs direction='right' >
                 ABOUT
@@ -87,7 +123,12 @@ function MainFrontComp(){
                 MENU
             </AnimatedDivs>
         </Menu>
-        </>}
+        </>:
+            <Ham>
+                <HamMenu />
+            </Ham>
+
+        }
         </>
     )
 }
