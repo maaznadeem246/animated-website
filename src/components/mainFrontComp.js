@@ -3,7 +3,7 @@ import { useSpring,animated } from "react-spring";
 import styled from "styled-components";
 import useAppData from "../hooks/useAppData";
 import useWindowSize from "../hooks/useWindowSize";
-const  colorVariables =  React.lazy(() => import("../sass/customvariables.scss")); 
+import colorVariables from "../sass/customvariables.scss"
 
 const AppName = styled.h1`
         text-align:center;
@@ -60,6 +60,31 @@ background-color:${colorVariables.defaultColor};
 
 `
 
+const HamCloseMenu = styled.div`
+position:relative;
+height:5px;
+width:30px;
+border-radius:25%;
+top:9px;
+right:3px;
+transform:rotate(45deg);
+background-color:${colorVariables.defaultColor};
+&::after{
+    content:" ";
+    position:absolute;
+    height:5px;
+    width:30px;
+    border-radius:25%;
+    background-color:${colorVariables.defaultColor};
+    top:0px;
+    right:0px;
+    transform:rotate(90deg);
+}
+
+
+
+`
+
 const Menu  = styled.h1`
 text-align:center;
 position:absolute;
@@ -101,6 +126,18 @@ function MainFrontComp(){
         console.log(width)
         setIsMobile(width < 430)
     },[width])
+    const [hamState, setHam] = useState(true);
+
+    const [hamStyles, hamApi] = useSpring(() => ({ opacity: 1 }))
+    const [hamCloseStyles, hamCloseApi] = useSpring(() => ({ opacity: 0 }))
+
+
+    useEffect(()=>{
+
+            hamApi.start({opacity:hamState ? 1 : 0})
+            hamCloseApi.start({opacity:hamState ? 0 : 1})
+    },[hamState])
+
     return (
         <>
        
@@ -124,8 +161,16 @@ function MainFrontComp(){
             </AnimatedDivs>
         </Menu>
         </>:
-            <Ham>
-                <HamMenu />
+            <Ham onClick={() => setHam((prev)=>!prev)}>
+                <AnimatedDivs direction='left'  >
+                    <animated.div style={hamStyles}>
+                        <HamMenu  />
+                    </animated.div>
+                    <animated.div  style={hamCloseStyles}>
+                        <HamCloseMenu />
+                    </animated.div>
+                    
+                </AnimatedDivs>
             </Ham>
 
         }
