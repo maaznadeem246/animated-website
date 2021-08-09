@@ -3,7 +3,7 @@ import { useSpring,animated } from "react-spring";
 import styled from "styled-components";
 import useAppData from "../hooks/useAppData";
 import useWindowSize from "../hooks/useWindowSize";
-import colorVariables from "../sass/customvariables.scss"
+const  colorVariables =  React.lazy(() => import("../sass/customvariables.scss")); 
 
 const AppName = styled.h1`
         text-align:center;
