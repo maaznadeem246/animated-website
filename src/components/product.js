@@ -23,7 +23,7 @@ function Product({pim,style,displayArrCursor, bind=()=>{}}){
 
     const styles = (isMobile) => {
         return {
-            width: isMobile ? 'fit-content' : '200px', height : isMobile ? '40%' : '50%', 'cursor': 'pointer', userSelect:'none',
+            width: isMobile ? '45%' : '200px', height : isMobile ? '40%' : '50%', 'cursor': 'pointer', userSelect:'none', maxHeight:400, maxWidth: isMobile ? 160 : 'unset',
            
         }
     }

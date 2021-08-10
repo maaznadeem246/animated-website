@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { useSpring,animated } from "react-spring";
+import { useSpring,animated, config } from "react-spring";
 import styled from "styled-components";
 import useAppData from "../hooks/useAppData";
 import useWindowSize from "../hooks/useWindowSize";
@@ -111,7 +111,7 @@ const AnimatedDivs = ({children,direction='default'}) => {
         from: { opacity: 0, transform:selDir[direction]},
       })
     return (
-        <animated.div style={animAppName}>  
+        <animated.div style={{...animAppName}}>  
             {children}      
         </animated.div>
     )
@@ -128,14 +128,14 @@ function MainFrontComp(){
     },[width])
     const [hamState, setHam] = useState(true);
 
-    const [hamStyles, hamApi] = useSpring(() => ({ opacity: 1 }))
-    const [hamCloseStyles, hamCloseApi] = useSpring(() => ({ opacity: 0 }))
+    const [hamStyles, hamApi] = useSpring(() => ({from:{scale:0},   }))
+    const [hamCloseStyles, hamCloseApi] = useSpring(() => ({from:{scale:0}}))
 
 
     useEffect(()=>{
 
-            hamApi.start({opacity:hamState ? 1 : 0})
-            hamCloseApi.start({opacity:hamState ? 0 : 1})
+            hamApi.start({to:hamState ? [{scale:0},{scale:1}] : [{scale:0}]})
+            hamCloseApi.start({to:hamState ? [{scale:0}] : [{scale:0},{scale:1}]})
     },[hamState])
 
     return (
@@ -163,10 +163,10 @@ function MainFrontComp(){
         </>:
             <Ham onClick={() => setHam((prev)=>!prev)}>
                 <AnimatedDivs direction='left'  >
-                    <animated.div style={hamStyles}>
+                    <animated.div style={{...hamStyles,position:'absolute',height:25,width:25,right:0}}>
                         <HamMenu  />
                     </animated.div>
-                    <animated.div  style={hamCloseStyles}>
+                    <animated.div  style={{...hamCloseStyles,position:'absolute',height:30,width:25,top:5,right:0}}>
                         <HamCloseMenu />
                     </animated.div>
                     
