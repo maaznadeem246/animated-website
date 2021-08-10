@@ -111,7 +111,6 @@ function ProductHover({hoverIt, hideHoverDiv, displayArrCursor}){
 
     const onClick  = (e) => {
         if(index != 0)  e.stopPropagation();
-
     }
     return(
         <>

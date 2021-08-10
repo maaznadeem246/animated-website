@@ -4,6 +4,8 @@ import styled from "styled-components";
 import useAppData from "../hooks/useAppData";
 import useWindowSize from "../hooks/useWindowSize";
 import colorVariables from "../sass/customvariables.scss"
+import displayArrCursor from "./displayArrCursor"
+import {  useHover } from 'react-use-gesture'
 
 const AppName = styled.h1`
         text-align:center;
@@ -110,8 +112,13 @@ const AnimatedDivs = ({children,direction='default'}) => {
         to:{ opacity: 1, transform:'translate(0)'},
         from: { opacity: 0, transform:selDir[direction]},
       })
+
+      const bind = useHover(({hovering,down,active})=>{
+        console.log(hovering)
+            displayArrCursor(!hovering)
+      })
     return (
-        <animated.div style={{...animAppName }}>  
+        <animated.div {...bind()} style={{...animAppName,cursor:'pointer' }}>  
             {children}      
         </animated.div>
     )
@@ -143,7 +150,7 @@ function MainFrontComp(){
        
         <AppName>
             <AnimatedDivs direction='up' >
-                <div className="appNameCss" style={{ 'font-size':  isMobile ?'2rem':'2.5rem'}}>{appName}</div> 
+                <div className="appNameCss" style={{ fontSize:  isMobile ?'2rem':'2.5rem'}}>{appName}</div> 
             </AnimatedDivs>
         </AppName>
 

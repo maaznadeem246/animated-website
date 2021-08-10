@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
-import { animated,useSpring } from "react-spring";
+import { useChain, animated,useSpring,useSpringRef,useTransition } from "@react-spring/web";
+
 import useAppData from "../hooks/useAppData";
 import colorVariables from "../sass/customvariables.scss"
 
@@ -20,22 +21,43 @@ const styles = () => ({
     }
 })
 
+
+
+
 function MenuComp(){
     const classes = styles();
-    const [hamStyles, hamApi] = useSpring(() => ({from:{opacity:0,scale:0.9,display:'none'}}))
+    const hamApi = useSpringRef()
     const {ham} = useAppData();
+    const [open, setOpen] = useState(false);
     
-    // const [hide, setHide] = useState(true);
+    
 
     useEffect(()=>{
-        // setHide(ham)
-
-        hamApi.start({to:[{display:ham ?'unset': 'block', opacity:ham ? 0 : 1,scale:ham ? 0.9 : 1},ham ?{display:'none'}:{}]})
+        setOpen(ham)
     },[ham])
+
+    const hamStyles = useSpring({  
+        ref: hamApi,
+        from:{opacity:0,scale:0.9,display:'none'},
+        to:[{display:open ?'unset': 'block', opacity:open ? 0 : 1,scale:open ? 0.9 : 1},open ?{display:'none'}:{}]
+    })
+
+    // const transition = useTransition(open ? data : [], {
+    //     ref: transApi,
+    //     trail: 400 / data.length,
+    //     from: { opacity: 0, scale: 0 },
+    //     enter: { opacity: 1, scale: 1 },
+    //     leave: { opacity: 0, scale: 0 },
+    //   })
+
+    useChain([hamApi])
 
     return (
         <>
         <animated.div style={{ ...hamStyles,...classes.mainDiv,}}>
+            <animated.div>
+                
+            </animated.div>
         </animated.div>
         </>
     )

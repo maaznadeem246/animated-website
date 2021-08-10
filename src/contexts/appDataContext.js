@@ -27,6 +27,7 @@ const initialState = {
     prdctAnimIndex:0,
     appName:'Cold Can',
     ham:false,
+    
 };
 
 const reducer = (state, action) => {

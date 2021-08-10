@@ -58,6 +58,7 @@ function ProductsSlider(){
     const [props, set] = useSprings(productImages.length, (i) => ({ x: (i < productImages.length - 1 ? i - index : -1) * window.innerWidth, config:{ ...config.stiff },}))
     
     const bind = useGesture({
+      
         onDrag: ({ down, active, distance,direction: [xDir], velocity, cancel,  movement: [mx],  offset: [x] }) => {
           if(isMobile){
             console.log('mo')
