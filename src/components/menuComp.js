@@ -29,7 +29,7 @@ function MenuComp(){
 
     useEffect(()=>{
         // setHide(ham)
-        hamApi.start({to:[{opacity:ham ? 0 : 1,translateY:ham ? 10 : 0,display:'block'},ham ?{display:'none'}:{}]})
+        hamApi.start({to:[{opacity:ham ? 0 : 1,translateY:ham ? 10 : 0,display: ham ? 'unset' :'block'},ham ?{display:'none'}:{}]})
     },[ham])
 
     return (
