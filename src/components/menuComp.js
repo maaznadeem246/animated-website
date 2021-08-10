@@ -22,7 +22,7 @@ const styles = () => ({
 
 function MenuComp(){
     const classes = styles();
-    const [hamStyles, hamApi] = useSpring(() => ({from:{opacity:0,translateY:60,display:'none'}}))
+    const [hamStyles, hamApi] = useSpring(() => ({from:{opacity:0,scale:0.9,display:'none'}}))
     const {ham} = useAppData();
     
     // const [hide, setHide] = useState(true);
@@ -30,7 +30,7 @@ function MenuComp(){
     useEffect(()=>{
         // setHide(ham)
 
-        hamApi.start({to:[{display:ham ?'unset': 'block', opacity:ham ? 0 : 1,translateY:ham ? 10 : 0},ham ?{display:'none'}:{}]})
+        hamApi.start({to:[{display:ham ?'unset': 'block', opacity:ham ? 0 : 1,scale:ham ? 0.9 : 1},ham ?{display:'none'}:{}]})
     },[ham])
 
     return (
