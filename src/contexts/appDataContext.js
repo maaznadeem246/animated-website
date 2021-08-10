@@ -25,7 +25,8 @@ const initialState = {
         frontBack,Can1Back,Can2Back,Can3Back
     ],
     prdctAnimIndex:0,
-    appName:'Cold Can'
+    appName:'Cold Can',
+    ham:false,
 };
 
 const reducer = (state, action) => {
@@ -41,6 +42,12 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 prdctAnimIndex:0
+            }
+        case 'UPDATE_HAM':
+            const {ham}  = action.payload;
+            return {
+                ...state,
+                ham:ham
             }
     }
 
@@ -62,13 +69,23 @@ export const AppDataProvider = ({ children }) => {
     
     
     const updatePrdctAnimIndex = (d) => {
-        console.log(d)
+    
         dispatch({
             type: 'UPDATE_PRDCTANIMINDEX',
             payload: {
                 data: d
             }})
     }
+
+
+    const updateHam = (d) => {
+        dispatch({
+            type: 'UPDATE_HAM',
+            payload: {
+                ham: d
+            }})
+    }
+
 
     const resetPrdctAnimIndex = () => {
         dispatch({
@@ -83,7 +100,8 @@ export const AppDataProvider = ({ children }) => {
             value={{
                 ...state,
                 updatePrdctAnimIndex,
-                resetPrdctAnimIndex
+                resetPrdctAnimIndex,
+                updateHam
             }}
         >
             {children}
@@ -94,4 +112,4 @@ export const AppDataProvider = ({ children }) => {
 
 
 
-export default  AppDataContext  
+export default  AppDataContext;  

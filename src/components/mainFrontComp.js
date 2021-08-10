@@ -36,7 +36,7 @@ position:relative;
 height:5px;
 width:25px;
 border-radius:25%;
-top:13px;
+
 background-color:${colorVariables.defaultColor};
 &::after{
     content:" ";
@@ -65,7 +65,7 @@ position:relative;
 height:5px;
 width:30px;
 border-radius:25%;
-top:9px;
+top:0px;
 right:3px;
 transform:rotate(45deg);
 background-color:${colorVariables.defaultColor};
@@ -111,7 +111,7 @@ const AnimatedDivs = ({children,direction='default'}) => {
         from: { opacity: 0, transform:selDir[direction]},
       })
     return (
-        <animated.div style={{...animAppName}}>  
+        <animated.div style={{...animAppName }}>  
             {children}      
         </animated.div>
     )
@@ -121,7 +121,7 @@ function MainFrontComp(){
     const {appName} = useAppData();    
     const [width]= useWindowSize()
     const [isMobile, setIsMobile] = useState()
-
+    const {updateHam} =  useAppData()
     useEffect(()=>{
         console.log(width)
         setIsMobile(width < 430)
@@ -133,7 +133,7 @@ function MainFrontComp(){
 
 
     useEffect(()=>{
-
+            updateHam(hamState)
             hamApi.start({to:hamState ? [{scale:0},{scale:1}] : [{scale:0}]})
             hamCloseApi.start({to:hamState ? [{scale:0}] : [{scale:0},{scale:1}]})
     },[hamState])
@@ -163,10 +163,10 @@ function MainFrontComp(){
         </>:
             <Ham onClick={() => setHam((prev)=>!prev)}>
                 <AnimatedDivs direction='left'  >
-                    <animated.div style={{...hamStyles,position:'absolute',height:25,width:25,right:0}}>
+                    <animated.div style={{...hamStyles,position:'absolute',height:35,width:35,right:0, display:'flex', justifyContent:'center',alignItems:'center' }}>
                         <HamMenu  />
                     </animated.div>
-                    <animated.div  style={{...hamCloseStyles,position:'absolute',height:30,width:25,top:5,right:0}}>
+                    <animated.div  style={{...hamCloseStyles,position:'absolute',height:35,width:35 ,right:0, display:'flex', justifyContent:'center',alignItems:'center'}}>
                         <HamCloseMenu />
                     </animated.div>
                     

@@ -4,6 +4,7 @@ import './sass/index.scss';
 // import MainFrontComp from './components/mainFrontComp';
 import {AppDataProvider} from "./contexts/appDataContext"
 import Loading from './components/loading';
+const  MenuComp =  React.lazy(() => import('./components/menuComp'));
 const MainFrontComp =  React.lazy(() => import('./components/mainFrontComp'));
 const MainComp =  React.lazy(() => import("./components/mainComp"));
 
@@ -20,6 +21,7 @@ function App() {
          {/* <Comp/> */}
       <AppDataProvider>
         <MainComp />
+        <MenuComp />
         <MainFrontComp />
       </AppDataProvider>
       </Suspense>
