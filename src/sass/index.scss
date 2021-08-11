@@ -4,7 +4,7 @@
 
 
 *{
-
+    // border: 1px solid red;
 }
 html{
     cursor: none;
@@ -199,12 +199,34 @@ html,body{
     width:80%;
     display: flex;
     justify-content: center;
-    
+    position: relative;
     align-items:center;
     margin: auto;
+    // &::before{
+    //     content: ' ';
+    //     position: sticky;
+    //     height:20px;
+    //     width:100%;
+    //     top:0;
+    //     background:linear-gradient(180deg, rgba(249,244,234,1) 0%, rgba(254,254,253,0.4654236694677871) 51%, rgba(254,254,253,0) 100%);
+    // }
+
+    // &::after{
+    //     content: ' ';
+    //     position: sticky;
+    //     height:20px;
+    //     width:100%;
+    //     bottom:0;
+    //     background:linear-gradient(0deg, rgba(249,244,234,1) 0%, rgba(254,254,253,0.4654236694677871) 41%, rgba(254,254,253,0) 100%);
+    // }
     @include respond-to('xsmall') {
         // margin:40px;
-        // margin-top:100px;
+
+        height:85%;
+        width:90%;
+        bottom:0;
+        overflow: scroll;
         flex-wrap: wrap;
+        align-items:start;
     }
 }

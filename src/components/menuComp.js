@@ -3,6 +3,7 @@ import { useChain, animated,useSpring,useSpringRef,useTransition,useTrail } from
 import displayArrCursor from "./displayArrCursor"
 import useAppData from "../hooks/useAppData";
 import colorVariables from "../sass/customvariables.scss"
+import useWindowSize from "../hooks/useWindowSize";
 
 
 const styles = () => ({
@@ -24,16 +25,25 @@ const styles = () => ({
 
 function RevealCan({ open, children,ref }){
     const items = React.Children.toArray(children)
+    const [width] = useWindowSize();
+    const [isMobile, setIsMobile] = useState(false)
+
+    useEffect(()=>{
+        console.log(width)
+        setIsMobile((width < 430))
+    },[width])
+
     const trail = useTrail(items.length,{ 
         ref:ref,
+        delay:open ? 0 : 400,
         opacity: open ? 0 : 1,
-        height: open ? 0 : 300,
+        height: open ? 0 :  isMobile ?  150 :300,
         from:{opacity:0,height:0,}
     })
     return(
         <>{
         trail.map((style,index)=>(
-        <animated.div key={index} style={{...style, background:'white',flexGrow:1, margin:10,borderRadius:20}}>
+        <animated.div key={index} style={{...style, background:'white', width: isMobile ? '100%' : 'unset' , flexGrow: isMobile ? 'unset' : 1 ,  margin:10,borderRadius:20}}>
 
         </animated.div>
         ))}</>
@@ -44,10 +54,17 @@ function RevealCan({ open, children,ref }){
 function MenuComp(){
     const classes = styles();
     const hamApi = useSpringRef()
+    
     const revealCanApi = useSpringRef()
     const {ham} = useAppData();
     const [open, setOpen] = useState(false);
-    
+    const [width] = useWindowSize();
+    const [isMobile, setIsMobile] = useState(false)
+
+    useEffect(()=>{
+        console.log(width)
+        setIsMobile((width < 430))
+    },[width])
     
 
     useEffect(()=>{
@@ -82,7 +99,9 @@ function MenuComp(){
     return (
         <>
         <animated.div style={{ ...hamStyles,...classes.mainDiv,}}>
+       { isMobile && <div style={{widht:'100%',height:'15%', background:'transparent'}} />}
             <div className="menuInsideComp">
+
                 <RevealCan open={ham} ref={revealCanApi} >
                     <div></div>
                     <div></div>
