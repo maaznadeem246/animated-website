@@ -37,7 +37,7 @@ function RevealCan({ open, children,ref }){
         ref:ref,
         delay:open ? 0 : 400,
         opacity: open ? 0 : 1,
-        height: open ? 0 :  isMobile ?  150 :300,
+        height: open ? 0 :  isMobile ?  130 :300,
         from:{opacity:0,height:0,}
     })
     return(

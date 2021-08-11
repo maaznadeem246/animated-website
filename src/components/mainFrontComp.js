@@ -15,6 +15,7 @@ const AppName = styled.h1`
         margin:0;
         word-spacing:0;
         line-height:35px;
+      
 `
 
 const About  = styled.h1`
@@ -59,6 +60,7 @@ background-color:${colorVariables.defaultColor};
     background-color:${colorVariables.defaultColor};
     bottom:10px;
 }
+
 
 `
 
