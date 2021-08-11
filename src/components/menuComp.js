@@ -62,9 +62,8 @@ function MenuComp(){
     return (
         <>
         <animated.div style={{ ...hamStyles,...classes.mainDiv,}}>
-            <animated.div>
-
-            </animated.div>
+            <div className="menuInsideComp">
+            </div>    
         </animated.div>
         </>
     )
