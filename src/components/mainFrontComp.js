@@ -97,6 +97,10 @@ font-size:2rem;
 `
 
 const AnimatedDivs = ({children,direction='default'}) => {
+    const [width] = useWindowSize();
+    // const [isMobile, setIsMobile] = useState(false)
+    const {ham} = useAppData()
+    const [m, setM] = useState({})
 
     const selDir = {
         up:'translateY(20px)',
@@ -113,12 +117,23 @@ const AnimatedDivs = ({children,direction='default'}) => {
         from: { opacity: 0, transform:selDir[direction]},
       })
 
-      const bind = useHover(({hovering,down,active})=>{
-        console.log(hovering)
-            displayArrCursor(!hovering)
-      })
+    const bind = useHover(({hovering,down,active})=>{
+        
+        displayArrCursor(ham && !hovering)
+    })
+    
+
+    useEffect(()=>{
+
+        if(width > 430){
+            setM({...bind()})
+        }else{
+            setM({})
+        }
+    },[width])
+
     return (
-        <animated.div {...bind()} style={{...animAppName,cursor:'pointer' }}>  
+        <animated.div {...m} style={{...animAppName,position:'relative',cursor:'pointer' }}>  
             {children}      
         </animated.div>
     )
@@ -138,6 +153,22 @@ function MainFrontComp(){
     const [hamStyles, hamApi] = useSpring(() => ({from:{scale:0},   }))
     const [hamCloseStyles, hamCloseApi] = useSpring(() => ({from:{scale:0}}))
 
+
+    const [menuLine, menuLineApi] = useSpring(() => ({from:{scaleX:0}}))
+    const [aboutLine, aboutLineApi] = useSpring(() => ({from:{scaleX:0}}))
+
+    const hoverMenuBind = useHover(({hovering})=>{
+           menuLineApi.start({to:{scaleX:hovering ? 1 : 0}})
+    })
+
+
+    const hoverAboutBind = useHover(({hovering})=>{
+         aboutLineApi.start({to:{scaleX: hovering ? 1 : 0}})
+        
+
+    })
+
+    
 
     useEffect(()=>{
             updateHam(hamState)
@@ -159,12 +190,22 @@ function MainFrontComp(){
         {!isMobile ?<>
         <About>
             <AnimatedDivs direction='right' >
-                ABOUT
+                <animated.div {...hoverAboutBind()}>
+                    <animated.div  style={{ ...aboutLine, width:'100%', position:'absolute', height:'4px', top:'7px', background:colorVariables.defaultColor, opacity:1, }} />
+                    ABOUT
+                </animated.div>
             </AnimatedDivs>
         </About>
-        <Menu>
+        <Menu onClick={() => setHam((prev)=>!prev)}>
             <AnimatedDivs direction='left' >
-                MENU
+                <animated.div {...hoverMenuBind()} style={{...hamStyles,position:'absolute',right:0, bottom:6, display:'flex', justifyContent:'center',alignItems:'center' }}>
+                        <animated.div  style={{ ...menuLine, width:'100%', position:'absolute', height:'4px', background:colorVariables.defaultColor, opacity:1, }} />
+                        MENU 
+                </animated.div>
+                <animated.div {...hoverMenuBind()}  style={{...hamCloseStyles,position:'absolute',right:5, bottom:6, display:'flex', justifyContent:'center',alignItems:'center'}}>
+                    <animated.div  style={{ ...menuLine, width:'100%', position:'absolute', height:'4px', background:colorVariables.defaultColor, opacity:1, }} />
+                        Hide
+                </animated.div>
             </AnimatedDivs>
         </Menu>
         </>:

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { useChain, animated,useSpring,useSpringRef,useTransition } from "@react-spring/web";
-
+import displayArrCursor from "./displayArrCursor"
 import useAppData from "../hooks/useAppData";
 import colorVariables from "../sass/customvariables.scss"
 
@@ -33,13 +33,18 @@ function MenuComp(){
     
 
     useEffect(()=>{
+
+        displayArrCursor(false)
         setOpen(ham)
     },[ham])
 
     const hamStyles = useSpring({  
         ref: hamApi,
         from:{opacity:0,scale:0.9,display:'none'},
-        to:[{display:open ?'unset': 'block', opacity:open ? 0 : 1,scale:open ? 0.9 : 1},open ?{display:'none'}:{}]
+        to: async (next, cancel) => {
+            await next([{display:open ?'unset': 'block', opacity:open ? 0 : 1,scale:open ? 0.9 : 1},open ?{display:'none'}:{}])            
+          },
+        
     })
 
     // const transition = useTransition(open ? data : [], {
@@ -52,11 +57,13 @@ function MenuComp(){
 
     useChain([hamApi])
 
+
+
     return (
         <>
         <animated.div style={{ ...hamStyles,...classes.mainDiv,}}>
             <animated.div>
-                
+
             </animated.div>
         </animated.div>
         </>

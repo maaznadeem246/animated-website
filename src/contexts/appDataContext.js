@@ -16,10 +16,10 @@ import frontBack from "../images/frontback.png"
 
 const initialState = {
     productsData:[
-        {img:"welcom",text:'discover the range', textSec:"Click anywhere to use",},
-        {img:Can1,text:"Oh that's Grapes", textSec:"Queensland Blue Grapes and Coca",},
-        {img:Can2,text:"Oh that's Banana", textSec:"Almond Milk and Apple",},
-        {img:Can3,text:"Oh that's Orange", textSec:"Peckham Pear and Raspberry",}
+        {img:"welcom",text:'discover the range', textSecDesk:"Click anywhere to use", textSecMob:"Tap anywhere to use",},
+        {img:Can1,text:"Oh that's Grapes", textSecDesk:"Queensland Blue Grapes and Coca", textSecMob:"Queensland Blue Grapes and Coca", },
+        {img:Can2,text:"Oh that's Banana", textSecDesk:"Almond Milk and Apple", textSecMob:"Almond Milk and Apple",},
+        {img:Can3,text:"Oh that's Orange", textSecDesk:"Peckham Pear and Raspberry", textSecMob:"Peckham Pear and Raspberry",}
     ],
     productsBackData:[
         frontBack,Can1Back,Can2Back,Can3Back

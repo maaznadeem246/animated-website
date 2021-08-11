@@ -121,7 +121,7 @@ function ProductHover({hoverIt, hideHoverDiv, displayArrCursor}){
             { productData && Object.keys(productData).length != 0 &&
                 <>
                     <animated.div className="hoverDivHead" style={{...innerHeadStyle, color:fntColors[index]}}>{productData.text}</animated.div>
-                    <animated.div className="hoverDivHeadSub" style={{...innerHeadStyle, color:fntColors[index]}} >{productData.textSec}</animated.div>
+                    <animated.div className="hoverDivHeadSub" style={{...innerHeadStyle, color:fntColors[index]}} >{productData.textSecDesk}</animated.div>
                 </>
             }
         </animated.div>
@@ -131,7 +131,7 @@ function ProductHover({hoverIt, hideHoverDiv, displayArrCursor}){
                 { productData && Object.keys(productData).length != 0 &&
                      mobileText.map((style,i) => (<>
                      <animated.div className="prdctText" style={{...style, color:fntColors[i]}}>{productData.text}</animated.div>
-                     <animated.div className="prdctTextSub" style={{...style, color:fntColors[i]}} >{productData.textSec}</animated.div>
+                     <animated.div className="prdctTextSub" style={{...style, color:fntColors[i]}} >{productData.textSecMob}</animated.div>
                     </>)) 
                 }
             </TextDiv>

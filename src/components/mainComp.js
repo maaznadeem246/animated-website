@@ -10,6 +10,7 @@ import useWindowSize from "../hooks/useWindowSize"
 const BackDiv = Styled.div`
 background-color:${props => props.brColor};
     height:100vh;
+    transition: background-color 0.6s;
     :before{
         content:" ";
         position:absolute;
