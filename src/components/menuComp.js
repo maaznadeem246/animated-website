@@ -56,13 +56,16 @@ function RevealCan({ open, children,ref,ref2 }){
         from:{opacity:0,height:0,}
     })
     const nameRevealSprings = useTrail(menuProductsData.length,({ ref:ref2,
-        from :{height:0, opacity:0,width:'100%'}, 
+        from :{height:0, opacity:0, width: isMobile ? '0%' :'100%'  }, 
         
-        to:{height:open ? 0 : 70, opacity:open ? 0 : 1,}, 
+        to:{height:open ? 0 :  isMobile ? 'inherit' : 70 , width: open ? isMobile ? '0%' : '100%' : isMobile ? '60%' : '100%'  , opacity:open ? 0 : 1,}, 
         delay:open ? 0 : 700,}))
 
     return(
-        <>{
+        <>
+
+        {
+
         trail.map((style,index)=>(
         <animated.div key={index} style={{...style, background:'white', width: isMobile ? '100%' : 'unset' , flexGrow: isMobile ? 'unset' : 1 ,  margin:10,borderRadius:20,position:'relative'}}>
             <animated.div  style={{...nameRevealSprings[index]} } className={'menuTexts'} >
