@@ -258,3 +258,36 @@ html,body{
     border-top-left-radius:20px;
     }
 }
+
+
+.menuImgs{
+    position:absolute;
+   
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height: 75%;
+    width:100%;   
+    @include respond-to('xsmall') {
+        // margin:40px;
+        right:0;
+        height: 100%;
+        width:40%; 
+    }
+}
+
+.menuimgCss{
+    width:initial;
+    height:inherit;
+    @include respond-to('xsmall') {
+        // margin:40px;
+
+        height:85%;
+    }
+}
+
+.menuImgsUpDn{
+    width:initial;
+    height:100%;
+    
+}

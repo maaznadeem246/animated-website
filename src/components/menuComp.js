@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { useChain, animated,useSpring,useSpringRef,useSprings,useTrail } from "@react-spring/web";
+import { useChain, animated,useSpring,useSpringRef,useSprings,useTrail,config } from "@react-spring/web";
 import displayArrCursor from "./displayArrCursor"
 import useAppData from "../hooks/useAppData";
 import colorVariables from "../sass/customvariables.scss"
@@ -36,8 +36,9 @@ const styles = () => ({
 })
 
 
-function RevealCan({ open, children,ref,ref2 }){
+function RevealCan({ open, children,ref,ref2,ref3 }){
     const items = React.Children.toArray(children)
+    console.log(items[0])
     const classes = styles();
     const [width] = useWindowSize();
     const {menuProductsData} = useAppData();
@@ -52,7 +53,7 @@ function RevealCan({ open, children,ref,ref2 }){
         ref:ref,
         delay:open ? 0 : 400,
         opacity: open ? 0 : 1,
-        height: open ? 0 :  isMobile ?  130 :300,
+        height: open ? 0 :  isMobile ?  150 :300,
         from:{opacity:0,height:0,}
     })
     const nameRevealSprings = useTrail(menuProductsData.length,({ ref:ref2,
@@ -61,6 +62,26 @@ function RevealCan({ open, children,ref,ref2 }){
         to:{height:open ? 0 :  isMobile ? 'inherit' : 70 , width: open ? isMobile ? '0%' : '100%' : isMobile ? '60%' : '100%'  , opacity:open ? 0 : 1,}, 
         delay:open ? 0 : 700,}))
 
+        const imgRevealSprings = useTrail(menuProductsData.length,({ ref:ref3,
+            from :{scale:0, opacity:0 }, 
+            to:{scale:open? 0 : 1,  opacity:open ? 0 : 1},
+            delay:open ? 0 : 700,
+        }))
+
+
+        const [imgUpDownSprings,api] = useSprings(menuProductsData.length,(index) => ({ 
+            loop:true,
+            from :{translateY:-15}, 
+            to:[{translateY:0},{translateY:-15 }],
+            config:{mass: 1, tension: 380, friction: 120},
+          
+            
+        }))
+
+        useEffect(()=>{
+            api.start()
+        },[])
+
     return(
         <>
 
@@ -68,8 +89,11 @@ function RevealCan({ open, children,ref,ref2 }){
 
         trail.map((style,index)=>(
         <animated.div key={index} style={{...style, background:'white', width: isMobile ? '100%' : 'unset' , flexGrow: isMobile ? 'unset' : 1 ,  margin:10,borderRadius:20,position:'relative'}}>
+            <animated.div  style={{ ...imgRevealSprings[index] }}  className={'menuImgs'}   >
+                <animated.div style={{...imgUpDownSprings[index], }} className={'menuImgsUpDn'}>  {items[index].props.children[0]} </animated.div>
+            </animated.div>
             <animated.div  style={{...nameRevealSprings[index]} } className={'menuTexts'} >
-                {items[index]}
+                {items[index].props.children[1]}
             </animated.div>
         </animated.div>
         ))}</>
@@ -82,6 +106,8 @@ function MenuComp(){
     const hamApi = useSpringRef()
     const revealCanApi = useSpringRef()
     const revealNamesApi = useSpringRef()
+    const revealImgsApi = useSpringRef()
+  
     const {ham,menuProductsData} = useAppData();
     const [open, setOpen] = useState(false);
     const [width] = useWindowSize();
@@ -124,7 +150,7 @@ function MenuComp(){
     //     leave: { opacity: 0, scale: 0 },
     //   })
 
-    useChain(!open ? [hamApi,revealCanApi,revealNamesApi] : [revealNamesApi,revealCanApi,hamApi], !open ? [0,0.5,1] : [])
+    useChain(!open ? [hamApi,revealCanApi,revealNamesApi,revealImgsApi] : [revealImgsApi,revealNamesApi,revealCanApi,hamApi], !open ? [0,0.5,0.7,1] : [])
 
 
 
@@ -133,11 +159,11 @@ function MenuComp(){
         <animated.div style={{ ...hamStyles,...classes.mainDiv,}}>
             { isMobile && <div style={{widht:'100%',height:'15%', background:'transparent'}} />}
             <div className="menuInsideComp">
-                <RevealCan open={ham} ref={revealCanApi} ref2={revealNamesApi} >
+                <RevealCan open={ham} ref={revealCanApi} ref2={revealNamesApi} ref3={revealImgsApi}  >
                     {
                         menuProductsData.map((v,i)=>{
                           return(<>
-
+                                    <img src={v.img} className="menuimgCss"  />
                                    {v.text}
 
                                </>)
