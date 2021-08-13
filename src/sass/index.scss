@@ -26,7 +26,7 @@ html,body{
     width: 100%;
     
     overflow: hidden;
-    position: 'relative',
+    position: 'relatie';
 }
 
 .containerDiv{
@@ -229,5 +229,32 @@ html,body{
         flex-wrap: wrap;
         align-items:start;
         align-content: start;
+    }
+}
+
+
+
+
+.menuTexts{
+    position:absolute;
+    bottom:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:2rem;
+    letter-spacing:5px;
+    font-family:$defaultAppNameFont;
+    color:$defaultBackColor;
+    background-color:$defaultColor;
+    border-bottom-right-radius:20px;
+    border-bottom-left-radius:20px;
+  
+    @include respond-to('xsmall') {
+        // margin:40px;
+      
+        border-bottom-right-radius:0px;
+        border-bottom-left-radius:0px;
+    border-bottom-left-radius:20px;
+    border-top-left-radius:20px;
     }
 }

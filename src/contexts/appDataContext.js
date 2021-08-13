@@ -27,7 +27,11 @@ const initialState = {
     prdctAnimIndex:0,
     appName:'Cold Can',
     ham:false,
-    
+    menuProductsData:[
+        {img:Can1,text:"Grapes",  },
+        {img:Can2,text:"Banana", },
+        {img:Can3,text:"Orange", }
+    ],
 };
 
 const reducer = (state, action) => {

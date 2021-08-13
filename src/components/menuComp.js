@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { useChain, animated,useSpring,useSpringRef,useTransition,useTrail } from "@react-spring/web";
+import { useChain, animated,useSpring,useSpringRef,useSprings,useTrail } from "@react-spring/web";
 import displayArrCursor from "./displayArrCursor"
 import useAppData from "../hooks/useAppData";
 import colorVariables from "../sass/customvariables.scss"
@@ -19,13 +19,28 @@ const styles = () => ({
 
         
         }
+    },
+    menuTexts:{
+        position:'absolute',bottom:0,
+        display:'flex',
+        justifyContent:'center',
+        alignItems:'center',
+        fontSize:'2rem',
+        letterSpacing:'5px',
+        fontFamily:colorVariables.defaultAppNameFont,
+        color:colorVariables.defaultBackColor,
+        backgroundColor:colorVariables.defaultColor,
+        borderBottomRightRadius:20,
+        borderBottomLeftRadius:20,
     }
 })
 
 
-function RevealCan({ open, children,ref }){
+function RevealCan({ open, children,ref,ref2 }){
     const items = React.Children.toArray(children)
+    const classes = styles();
     const [width] = useWindowSize();
+    const {menuProductsData} = useAppData();
     const [isMobile, setIsMobile] = useState(false)
 
     useEffect(()=>{
@@ -40,11 +55,19 @@ function RevealCan({ open, children,ref }){
         height: open ? 0 :  isMobile ?  130 :300,
         from:{opacity:0,height:0,}
     })
+    const nameRevealSprings = useTrail(menuProductsData.length,({ ref:ref2,
+        from :{height:0, opacity:0,width:'100%'}, 
+        
+        to:{height:open ? 0 : 70, opacity:open ? 0 : 1,}, 
+        delay:open ? 0 : 700,}))
+
     return(
         <>{
         trail.map((style,index)=>(
-        <animated.div key={index} style={{...style, background:'white', width: isMobile ? '100%' : 'unset' , flexGrow: isMobile ? 'unset' : 1 ,  margin:10,borderRadius:20}}>
-
+        <animated.div key={index} style={{...style, background:'white', width: isMobile ? '100%' : 'unset' , flexGrow: isMobile ? 'unset' : 1 ,  margin:10,borderRadius:20,position:'relative'}}>
+            <animated.div  style={{...nameRevealSprings[index]} } className={'menuTexts'} >
+                {items[index]}
+            </animated.div>
         </animated.div>
         ))}</>
     )
@@ -54,9 +77,9 @@ function RevealCan({ open, children,ref }){
 function MenuComp(){
     const classes = styles();
     const hamApi = useSpringRef()
-    
     const revealCanApi = useSpringRef()
-    const {ham} = useAppData();
+    const revealNamesApi = useSpringRef()
+    const {ham,menuProductsData} = useAppData();
     const [open, setOpen] = useState(false);
     const [width] = useWindowSize();
     const [isMobile, setIsMobile] = useState(false)
@@ -79,8 +102,14 @@ function MenuComp(){
         // to: async (next, cancel) => {
         //     await next([{display:open ?'unset': 'block', opacity:open ? 0 : 1,scale:open ? 0.9 : 1},open ?{display:'none'}:{}])            
         //   },
-        to:[{display:open ?'unset': 'block', opacity:open ? 0 : 1,scale:open ? 0.9 : 1},open ?{display:'none'}:{}]
+        to:[{display:open ?'unset': 'block', opacity:open ? 0 : 1,scale:open ? 0.9 : 1},open ?{display:'none'}:{}],
+        
     })
+
+
+    // const nameRevealSprings = useSprings(menuProductsData.length,{  opacity: 1, ref })
+   // const [nameRevealSprings, nameRevealSpringsApi] = useSprings(menuProductsData.length, index => ({ opacity: 1,ref }))
+
 
 
 
@@ -92,20 +121,25 @@ function MenuComp(){
     //     leave: { opacity: 0, scale: 0 },
     //   })
 
-    useChain(ham ? [hamApi,revealCanApi] : [revealCanApi,hamApi], )
+    useChain(!open ? [hamApi,revealCanApi,revealNamesApi] : [revealNamesApi,revealCanApi,hamApi], !open ? [0,0.5,1] : [])
 
 
 
     return (
         <>
         <animated.div style={{ ...hamStyles,...classes.mainDiv,}}>
-       { isMobile && <div style={{widht:'100%',height:'15%', background:'transparent'}} />}
+            { isMobile && <div style={{widht:'100%',height:'15%', background:'transparent'}} />}
             <div className="menuInsideComp">
+                <RevealCan open={ham} ref={revealCanApi} ref2={revealNamesApi} >
+                    {
+                        menuProductsData.map((v,i)=>{
+                          return(<>
 
-                <RevealCan open={ham} ref={revealCanApi} >
-                    <div></div>
-                    <div></div>
-                    <div></div>
+                                   {v.text}
+
+                               </>)
+                        })
+                    }
                 </RevealCan>
             </div>    
         </animated.div>
