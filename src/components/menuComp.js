@@ -193,7 +193,7 @@ function MenuComp(){
     return (
         <>
         <animated.div style={{ ...hamStyles,...classes.mainDiv,}}>
-            { isMobile && <div style={{widht:'100%',height:'15%', background:'transparent'}} />}
+            { isMobile && <div style={{widht:'100%',height:'20%', background:'transparent'}} />}
             <div className="menuInsideComp">
                 <RevealCan open={ham} ref={revealCanApi} ref2={revealNamesApi} ref3={revealImgsApi} ref4={revealBackImgsApi}  >
                     {
