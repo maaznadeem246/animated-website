@@ -83,7 +83,7 @@ function ProductsSlider(){
        
       useEffect(()=>{
         console.log(width)
-        setIsMobile((width < 430))
+        setIsMobile((width < 770))
     },[width])
 
     const getPost = (iin,indx,ttl) => {

@@ -60,7 +60,7 @@ function ProductHover({hoverIt, hideHoverDiv, displayArrCursor}){
 
     useEffect(()=>{
         console.log(width)
-        setIsMobile((width < 430))
+        setIsMobile((width < 770))
     },[width])
 
     useEffect(()=> {

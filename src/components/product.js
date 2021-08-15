@@ -18,7 +18,7 @@ function Product({pim,style,displayArrCursor, bind=()=>{}}){
     const [isMobile, setIsMobile] = useState()
     useEffect(()=>{
         console.log(width)
-        setIsMobile(width < 430)
+        setIsMobile(width < 770)
     },[width])
 
     const styles = (isMobile) => {

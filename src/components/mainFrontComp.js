@@ -127,7 +127,7 @@ const AnimatedDivs = ({children,direction='default'}) => {
 
     useEffect(()=>{
 
-        if(width > 430){
+        if(width > 770){
             setM({...bind()})
         }else{
             setM({})
@@ -148,7 +148,7 @@ function MainFrontComp(){
     const {updateHam} =  useAppData()
     useEffect(()=>{
         console.log(width)
-        setIsMobile(width < 430)
+        setIsMobile(width < 770)
     },[width])
     const [hamState, setHam] = useState(true);
 

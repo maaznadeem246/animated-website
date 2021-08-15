@@ -46,7 +46,7 @@ function RevealCan({ open, children,ref,ref2,ref3,ref4 }){
 
     useEffect(()=>{
         console.log(width)
-        setIsMobile((width < 430))
+        setIsMobile((width < 770))
     },[width])
 
     const trail = useTrail(items.length,{ 
@@ -151,7 +151,7 @@ function MenuComp(){
 
     useEffect(()=>{
         console.log(width)
-        setIsMobile((width < 430))
+        setIsMobile((width < 770))
     },[width])
     
 

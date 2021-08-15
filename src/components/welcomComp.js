@@ -22,7 +22,7 @@ function Welcome(){
 
     useEffect(()=>{
         console.log(width)
-        setIsMobile((width < 430))
+        setIsMobile((width < 770))
     },[width])
     return(
         <WelcomDiv fntsize={isMobile ? '2.5rem': '5.5rem'} border={isMobile?`6px solid ${customVar.defaultColor}`: `10px solid ${customVar.defaultColor}`}>
