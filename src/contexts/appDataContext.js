@@ -28,9 +28,9 @@ const initialState = {
     appName:'Cold Can',
     ham:false,
     menuProductsData:[
-        {img:Can1,text:"Grapes",  },
-        {img:Can2,text:"Banana", },
-        {img:Can3,text:"Orange", }
+        {img:Can1,text:"Grapes", imgBack:Can1Back },
+        {img:Can2,text:"Banana", imgBack:Can2Back },
+        {img:Can3,text:"Orange", imgBack:Can3Back }
     ],
 };
 

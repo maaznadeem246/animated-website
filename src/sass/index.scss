@@ -233,7 +233,29 @@ html,body{
 }
 
 
+.menuCards{
+    margin:10px;
+    border-radius:20px;
+    position:relative;   
+    box-shadow: 0px 10px 30px -5px rgba(0, 0, 0, 0.3);
+    transition: box-shadow 0.5s;
+    will-change: transform;
+    background:white; 
+    @include respond-to('xsmall') {
+        // margin:40px;
+      
+        box-shadow: none;
+    }
+}
 
+.menuCards:hover {
+    box-shadow: 0px 30px 100px -10px rgba(0, 0, 0, 0.4);
+    @include respond-to('xsmall') {
+        // margin:40px;
+      
+        box-shadow: none;
+    }
+  }
 
 .menuTexts{
     position:absolute;
@@ -244,8 +266,9 @@ html,body{
     font-size:2rem;
     letter-spacing:5px;
     font-family:$defaultAppNameFont;
-    color:$defaultBackColor;
-    background-color:$defaultColor;
+    // background-color:$defaultBackColor;
+    background-color: rgba(255, 255, 255, 0.82);
+    color:$defaultColor;// color:$defaultBackColor;
     border-bottom-right-radius:20px;
     border-bottom-left-radius:20px;
   
@@ -278,16 +301,17 @@ html,body{
 
 .menuimgCss{
     width:initial;
-    height:inherit;
+    height:85%;
     @include respond-to('xsmall') {
         // margin:40px;
 
-        height:85%;
+        height:80%;
     }
 }
 
 .menuImgsUpDn{
     width:initial;
     height:100%;
-    
+    display: flex;
+    align-items: center;
 }

@@ -36,7 +36,7 @@ const styles = () => ({
 })
 
 
-function RevealCan({ open, children,ref,ref2,ref3 }){
+function RevealCan({ open, children,ref,ref2,ref3,ref4 }){
     const items = React.Children.toArray(children)
     console.log(items[0])
     const classes = styles();
@@ -68,12 +68,18 @@ function RevealCan({ open, children,ref,ref2,ref3 }){
             delay:open ? 0 : 700,
         }))
 
+        const backImgRevealSprings = useTrail(menuProductsData.length,({ ref:ref4,
+            from :{ opacity:0 }, 
+            to:{opacity:open ? 0 : 0.6},
+            delay:open ? 0 : 500,
+        }))
+
 
         const [imgUpDownSprings,api] = useSprings(menuProductsData.length,(index) => ({ 
-            loop:true,
-            from :{translateY:-15}, 
-            to:[{translateY:0},{translateY:-15 }],
-            config:{mass: 1, tension: 380, friction: 120},
+            // loop:true,
+            // from :{translateY:-15}, 
+            // to:[{translateY:0},{translateY:-15 }],
+            // config:{mass: 1, tension: 380, frict ion: 120},
           
             
         }))
@@ -88,12 +94,41 @@ function RevealCan({ open, children,ref,ref2,ref3 }){
         {
 
         trail.map((style,index)=>(
-        <animated.div key={index} style={{...style, background:'white', width: isMobile ? '100%' : 'unset' , flexGrow: isMobile ? 'unset' : 1 ,  margin:10,borderRadius:20,position:'relative'}}>
+        <animated.div key={index} className={'menuCards'} style={{
+                    ...style, 
+                    width: isMobile ? '100%' : 'unset' , 
+                    flexGrow: isMobile ? 'unset' : 1 ,  
+                    
+            }}  >
+                 <animated.img  src={menuProductsData[index].imgBack} 
+                style={{    
+                    width:"100%", height:"100%", 
+                    position: 'absolute',
+                    zIndex: -1,
+                    willChange:'opacity',
+                    objectFit: 'cover',
+                    borderRadius:'20px',
+                    ...backImgRevealSprings[index],
+                
+ 
+                }} />
             <animated.div  style={{ ...imgRevealSprings[index] }}  className={'menuImgs'}   >
                 <animated.div style={{...imgUpDownSprings[index], }} className={'menuImgsUpDn'}>  {items[index].props.children[0]} </animated.div>
             </animated.div>
-            <animated.div  style={{...nameRevealSprings[index]} } className={'menuTexts'} >
-                {items[index].props.children[1]}
+            <animated.div  style={{...nameRevealSprings[index],   }} className={'menuTexts'} >
+            {/* backgroundSize:'cover', backgroundImage:`url(${menuProductsData[index].imgBack})` */}
+            <span>{items[index].props.children[1]}</span>
+                {/* <img src={menuProductsData[index].imgBack} 
+                style={{    
+                    width:"100%", height:"100%", 
+                    position: 'absolute',
+                    zIndex: -1,
+                    objectFit: 'cover',
+                    opacity: 0.6,
+                    borderBottomRightRadius:'20px',
+                    borderBottomLeftRadius:'20px',
+                }} /> */}
+                
             </animated.div>
         </animated.div>
         ))}</>
@@ -107,6 +142,7 @@ function MenuComp(){
     const revealCanApi = useSpringRef()
     const revealNamesApi = useSpringRef()
     const revealImgsApi = useSpringRef()
+    const revealBackImgsApi = useSpringRef()
   
     const {ham,menuProductsData} = useAppData();
     const [open, setOpen] = useState(false);
@@ -150,7 +186,7 @@ function MenuComp(){
     //     leave: { opacity: 0, scale: 0 },
     //   })
 
-    useChain(!open ? [hamApi,revealCanApi,revealNamesApi,revealImgsApi] : [revealImgsApi,revealNamesApi,revealCanApi,hamApi], !open ? [0,0.5,0.7,1] : [])
+    useChain(!open ? [hamApi,revealCanApi,revealBackImgsApi,revealNamesApi,revealImgsApi, ] : [revealImgsApi,revealNamesApi,revealBackImgsApi,revealCanApi,hamApi], !open ? [0,0.5,0.6,0.7,1] : [])
 
 
 
@@ -159,7 +195,7 @@ function MenuComp(){
         <animated.div style={{ ...hamStyles,...classes.mainDiv,}}>
             { isMobile && <div style={{widht:'100%',height:'15%', background:'transparent'}} />}
             <div className="menuInsideComp">
-                <RevealCan open={ham} ref={revealCanApi} ref2={revealNamesApi} ref3={revealImgsApi}  >
+                <RevealCan open={ham} ref={revealCanApi} ref2={revealNamesApi} ref3={revealImgsApi} ref4={revealBackImgsApi}  >
                     {
                         menuProductsData.map((v,i)=>{
                           return(<>
