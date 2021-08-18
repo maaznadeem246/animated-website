@@ -174,8 +174,8 @@ function MainFrontComp(){
 
     useEffect(()=>{
             updateHam(hamState)
-            hamApi.start({to:hamState ? [{scale:0},{scale:1}] : [{scale:0}]})
-            hamCloseApi.start({to:hamState ? [{scale:0}] : [{scale:0},{scale:1}]})
+            hamApi.start({to:!hamState ?   [{scale:0}] : [{scale:0},{scale:1}]})
+            hamCloseApi.start({to:!hamState ?  [{scale:0},{scale:1}] : [{scale:0}]})
     },[hamState])
 
     return (

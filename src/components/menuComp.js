@@ -145,7 +145,7 @@ function MenuComp(){
     const revealBackImgsApi = useSpringRef()
   
     const {ham,menuProductsData} = useAppData();
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(true);
     const [width] = useWindowSize();
     const [isMobile, setIsMobile] = useState(false)
 
@@ -156,7 +156,7 @@ function MenuComp(){
     
 
     useEffect(()=>{
-
+        console.log(ham)
         displayArrCursor(false)
         setOpen(ham)
     },[ham])
@@ -191,7 +191,7 @@ function MenuComp(){
 
 
     return (
-        <>
+        <>{        console.log(open)}
         <animated.div style={{ ...hamStyles,...classes.mainDiv,}}>
             { isMobile && <div style={{widht:'100%',height:'20%', background:'transparent'}} />}
             <div className="menuInsideComp">

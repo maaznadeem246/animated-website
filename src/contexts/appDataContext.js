@@ -26,7 +26,7 @@ const initialState = {
     ],
     prdctAnimIndex:0,
     appName:'Cold Can',
-    ham:false,
+    ham:true,
     menuProductsData:[
         {img:Can1,text:"Grapes", imgBack:Can1Back },
         {img:Can2,text:"Banana", imgBack:Can2Back },
