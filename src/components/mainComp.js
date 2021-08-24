@@ -96,7 +96,7 @@ function MainComp(){
     return (
         <>
 
-        <div className="cursor" style={{display:!isMobile?'block':'none'}} ></div>
+        {/* <div className="cursor" style={{display:!isMobile?'block':'none'}} ></div> */}
         <animated.div   className={styles.mainD} style={stylesAnim}>  
                        
             <BackDiv brColor={brColors[ind] || brColors[1]}>

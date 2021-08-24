@@ -193,7 +193,7 @@ function MainFrontComp(){
         <About>
             <AnimatedDivs direction='right' >
                 <animated.div {...hoverAboutBind()}>
-                    <animated.div  style={{ ...aboutLine, width:'100%', position:'absolute', height:'4px', top:'7px', background:colorVariables.defaultColor, opacity:1, }} />
+                    <animated.div  style={{ ...aboutLine, width:'100%', position:'absolute', height:'3.5px', top:'7px', background:colorVariables.defaultColor, opacity:1, }} />
                     ABOUT
                 </animated.div>
             </AnimatedDivs>
@@ -201,11 +201,11 @@ function MainFrontComp(){
         <Menu onClick={() => setHam((prev)=>!prev)}>
             <AnimatedDivs direction='left' >
                 <animated.div {...hoverMenuBind()} style={{...hamStyles,position:'absolute',right:0, bottom:6, display:'flex', justifyContent:'center',alignItems:'center' }}>
-                        <animated.div  style={{ ...menuLine, width:'100%', position:'absolute', height:'4px', background:colorVariables.defaultColor, opacity:1, }} />
+                        <animated.div  style={{ ...menuLine, width:'100%', position:'absolute', height:'3.5px', background:colorVariables.defaultColor, opacity:1, }} />
                         MENU 
                 </animated.div>
                 <animated.div {...hoverMenuBind()}  style={{...hamCloseStyles,position:'absolute',right:5, bottom:6, display:'flex', justifyContent:'center',alignItems:'center'}}>
-                    <animated.div  style={{ ...menuLine, width:'100%', position:'absolute', height:'4px', background:colorVariables.defaultColor, opacity:1, }} />
+                    <animated.div  style={{ ...menuLine, width:'100%', position:'absolute', height:'3.5px', background:colorVariables.defaultColor, opacity:1, }} />
                         Hide
                 </animated.div>
             </AnimatedDivs>

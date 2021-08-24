@@ -122,6 +122,9 @@ function ProductHover({hoverIt, hideHoverDiv, displayArrCursor}){
                 <>
                     <animated.div className="hoverDivHead" style={{...innerHeadStyle, color:fntColors[index]}}>{productData.text}</animated.div>
                     <animated.div className="hoverDivHeadSub" style={{...innerHeadStyle, color:fntColors[index]}} >{productData.textSecDesk}</animated.div>
+                    {/* <animated.div className="hoverDivButton" >
+                        <button >  </button>
+                    </animated.div> */}
                 </>
             }
         </animated.div>
