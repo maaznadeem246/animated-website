@@ -15,6 +15,7 @@ const AppName = styled.h1`
         margin:0;
         word-spacing:0;
         line-height:35px;
+        z-index:3;
       
 `
 
@@ -26,12 +27,14 @@ right:85px;
 margin:0;
 font-size:1.3rem;
 transform: translateY(0) translateX(100%) rotate(90deg);
+z-index:3;
 `
 
 const Ham = styled.div`
 position:absolute;
 top:40px;
 right:55px;
+z-index:3;
 `
 
 const HamMenu = styled.div`
@@ -61,7 +64,7 @@ background-color:${colorVariables.defaultColor};
     bottom:10px;
 }
 
-
+z-index:3;
 `
 
 const HamCloseMenu = styled.div`
@@ -86,7 +89,7 @@ background-color:${colorVariables.defaultColor};
 }
 
 
-
+z-index:3;
 `
 
 const Menu  = styled.h1`
@@ -96,6 +99,26 @@ bottom:50px;
 right:60px;
 margin:0;
 font-size:2rem;
+z-index:3;
+`
+
+const Credits = styled.h1`
+text-align:left;
+position:absolute;
+bottom:50px;
+left:40px;
+margin:0;
+z-index:3;
+font-size:0.9rem;
+@media (max-width: 768px) {
+    left:unset;
+    width:100%;
+    text-align:center;
+    bottom:20px;
+    font-size:0.8rem;
+    z-index:1;
+}
+
 `
 
 const AnimatedDivs = ({children,direction='default'}) => {
@@ -210,6 +233,7 @@ function MainFrontComp(){
                 </animated.div>
             </AnimatedDivs>
         </Menu>
+
         </>:
             <Ham onClick={() => setHam((prev)=>!prev)}>
                 <AnimatedDivs direction='left'  >
@@ -224,6 +248,12 @@ function MainFrontComp(){
             </Ham>
 
         }
+         <Credits>
+            <AnimatedDivs direction='right' >
+                <div>Can Illustrations by <a className="creditsLinks" href="https://icons8.com/illustrations/author/5c07e68d82bcbc0092519bb6">Icons 8</a> from <a className="creditsLinks" href="https://icons8.com/illustrations">Ouch!</a></div>
+                <div>Back Illustrations by <a className="creditsLinks" href="https://www.ls.graphics/">IS</a> from <a className="creditsLinks"  href="https://products.ls.graphics/paaatterns/index.html">Paaatterns</a></div>
+            </AnimatedDivs>
+        </Credits>
         </>
     )
 }

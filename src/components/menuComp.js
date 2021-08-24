@@ -13,6 +13,7 @@ const styles = () => ({
         right:0,
         left:0,
         bottom:0,
+        zIndex:2,
         height:'100vh',
         background:colorVariables.defaultBackColor,
         '&::after':{
