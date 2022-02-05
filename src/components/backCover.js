@@ -1,5 +1,5 @@
-import React, { useState, useCallback,  useEffect, useRef, useLayoutEffect }  from "react"
-import { useTransition, config, animated, useSpringRef, useSpring } from '@react-spring/web'
+import React, { useState,useEffect, }  from "react"
+import { useTransition, config, animated, useSpringRef } from '@react-spring/web'
 import useAppData from "../hooks/useAppData"
 import styled from "styled-components"
 import {imgCache} from "../utilities/imageCache"
@@ -101,7 +101,7 @@ function BackCover(){
 
     return(
         <CoverDiv >
-          { transitions((style, i) => {
+          {/* { transition  s((style, i) => {
             const Page = productBack[i]
             const PrPage = pr[i]
             return( 
@@ -109,7 +109,7 @@ function BackCover(){
               <PrPage style={{'object-fit':'cover', width: isMobile ? '100%': '40%', height: isMobile ? '30%': '100%',position:'absolute',...style}} src={Page} />
             </>
             )
-          })}
+          })} */}
 
         </CoverDiv>
     )
