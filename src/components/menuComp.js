@@ -101,7 +101,7 @@ function RevealCan({ open, children,ref,ref2,ref3,ref4 }){
                     flexGrow: isMobile ? 'unset' : 1 ,  
                     
             }}  >
-                 <animated.img  src={menuProductsData[index].imgBack} 
+                 <animated.img loading={"lazy"}  src={menuProductsData[index].imgBack} 
                 style={{    
                     width:"100%", height:"100%", 
                     position: 'absolute',
