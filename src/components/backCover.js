@@ -20,16 +20,16 @@ position:relative;
 const pr = [
   ({style ,src}) =>  {
     // imgCache.read(src)
-  return <animated.img  src={src} className={'bg'} style={{'userSelect':'none' ,...style}}  />}  ,
+  return <animated.img loading={"lazy"}  src={src} className={'bg'} style={{'userSelect':'none' ,...style}}  />}  ,
   ({style,src}) => {
     // imgCache.read(src)
-    return  <animated.img  src={src} className={'bg'} style={{'userSelect':'none' ,...style}}  />},
+    return  <animated.img loading={"lazy"}  src={src} className={'bg'} style={{'userSelect':'none' ,...style}}  />},
   ({style,src}) => {
     // imgCache.read(src)
-    return <animated.img  src={src} className={'bg'} style={{'userSelect':'none' ,...style}}  />},
+    return <animated.img loading={"lazy"} src={src} className={'bg'} style={{'userSelect':'none' ,...style}}  />},
   ({style,src}) => {
     // imgCache.read(src)
-    return <animated.img  src={src} className={'bg'} style={{'userSelect':'none' ,...style}}  />},      
+    return <animated.img loading={"lazy"}  src={src} className={'bg'} style={{'userSelect':'none' ,...style}}  />},      
 ]
 
 
@@ -101,7 +101,7 @@ function BackCover(){
 
     return(
         <CoverDiv >
-          {/* { transition  s((style, i) => {
+          { transitions((style, i) => {
             const Page = productBack[i]
             const PrPage = pr[i]
             return( 
@@ -109,7 +109,7 @@ function BackCover(){
               <PrPage style={{'object-fit':'cover', width: isMobile ? '100%': '40%', height: isMobile ? '30%': '100%',position:'absolute',...style}} src={Page} />
             </>
             )
-          })} */}
+          })}
 
         </CoverDiv>
     )
